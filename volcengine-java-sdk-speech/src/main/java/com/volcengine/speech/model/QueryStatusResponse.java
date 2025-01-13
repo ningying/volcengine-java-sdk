@@ -21,7 +21,7 @@ public class QueryStatusResponse {
      * 任务状态: NotFound = 0 Training = 1 Success = 2 Failed = 3 Active = 4
      */
     @JsonProperty("status")
-    private String status;
+    private Integer status;
 
     /**
      *
@@ -60,11 +60,11 @@ public class QueryStatusResponse {
         this.speakerId = speakerId;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

@@ -8,10 +8,16 @@ import com.volcengine.speech.SpeechApi;
 import com.volcengine.speech.exception.SpeechAPIError;
 import com.volcengine.speech.exception.SpeechHttpException;
 import com.volcengine.speech.interceptor.AuthenticationInterceptor;
+import com.volcengine.speech.listener.SpeechWebSocketListener;
+import com.volcengine.speech.model.TtsStreamRequest;
+import com.volcengine.speech.model.TtsStreamResponse;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import okhttp3.ConnectionPool;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.HttpException;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -19,10 +25,14 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public abstract class SpeechBaseService {
+
+    private static final Logger logger = Logger.getLogger(SpeechBaseService.class.getName());
 
     public static final String BASE_URL = "https://openspeech.bytedance.com";
     public static final String BASE_REGION = "cn-beijing";
@@ -106,6 +116,42 @@ public abstract class SpeechBaseService {
                 throw e;
             }
         }
+    }
+
+    public static TtsStreamResponse execute(TtsStreamRequest request) {
+        return invokeWebSocket(request);
+    }
+
+    private static TtsStreamResponse invokeWebSocket(TtsStreamRequest request) {
+        TtsStreamResponse ttsStreamResponse = new TtsStreamResponse();
+        try {
+            Flowable<byte[]> stream = stream(request);
+            ttsStreamResponse.setStream(stream);
+            ttsStreamResponse.setCode(200);
+            ttsStreamResponse.setMessage("success");
+            ttsStreamResponse.setSuccess(true);
+        } catch (Exception e){
+            logger.severe("invokeWebSocket error: " + e.getMessage());
+            ttsStreamResponse.setCode(500);
+            ttsStreamResponse.setMessage(e.getMessage());
+            ttsStreamResponse.setSuccess(false);
+        }
+        return ttsStreamResponse;
+    }
+
+    private static Flowable<byte[]> stream(TtsStreamRequest request) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .pingInterval(50, TimeUnit.SECONDS)
+                .connectTimeout(2000, TimeUnit.MILLISECONDS)
+                .build();
+        Request httpRequest = new Request.Builder()
+                .url("wss://openspeech.bytedance.com/api/v3/tts/bidirection")
+                .header("X-Api-App-Key", request.getAppId())
+                .header("X-Api-Access-Key", request.getToken())
+                .header("X-Api-Resource-Id", "volc.megatts.default")
+                .header("X-Api-Connect-Id", UUID.randomUUID().toString())
+                .build();
+        return Flowable.create(emitter -> client.newWebSocket(httpRequest, new SpeechWebSocketListener(request.getSpeaker(), request.getInputStream(), emitter)), BackpressureStrategy.BUFFER);
     }
 
 }

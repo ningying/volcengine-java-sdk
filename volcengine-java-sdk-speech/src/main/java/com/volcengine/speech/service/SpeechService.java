@@ -1,6 +1,7 @@
 package com.volcengine.speech.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.volcengine.speech.SpeechApi;
 import com.volcengine.speech.exception.SpeechException;
 import com.volcengine.speech.interceptor.AuthenticationInterceptor;
@@ -54,7 +55,7 @@ public class SpeechService extends SpeechBaseService {
      * 状态查询
      */
     public QueryStatusResponse queryStatus(QueryStatusRequest request) {
-        logger.info("queryStatus request: " + request.toString());
+        logger.info("queryStatus request: " + new Gson().toJson(request));
         return execute(api.queryStatus(request, "volc.megatts.voiceclone"));
     }
 
@@ -62,9 +63,20 @@ public class SpeechService extends SpeechBaseService {
      * 语音合成
      */
     public TtsResponse synthesis(TtsRequest request) {
-        logger.info("synthesis request: " + request.toString());
+        logger.info("synthesis request: " + new Gson().toJson(request));
         return execute(api.synthesis(request));
     }
+
+    /**
+     * 流式语音合成(支持边发送边接收)
+     * @param request 语音合成请求
+     */
+    public TtsStreamResponse synthesis(TtsStreamRequest request) {
+        logger.info("streamSynthesis request: " + new Gson().toJson(request));
+        return execute(request);
+    }
+
+
 
 
 
