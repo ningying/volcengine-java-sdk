@@ -8,7 +8,10 @@ import com.volcengine.speech.SpeechApi;
 import com.volcengine.speech.exception.SpeechAPIError;
 import com.volcengine.speech.exception.SpeechHttpException;
 import com.volcengine.speech.interceptor.AuthenticationInterceptor;
+import com.volcengine.speech.listener.AsrWebsocketListener;
 import com.volcengine.speech.listener.SpeechWebSocketListener;
+import com.volcengine.speech.model.AsrStreamRequest;
+import com.volcengine.speech.model.AsrStreamResponse;
 import com.volcengine.speech.model.TtsStreamRequest;
 import com.volcengine.speech.model.TtsStreamResponse;
 import io.reactivex.BackpressureStrategy;
@@ -25,6 +28,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -122,6 +126,10 @@ public abstract class SpeechBaseService {
         return invokeWebSocket(request);
     }
 
+    public static AsrStreamResponse execute(AsrStreamRequest request) {
+        return invokeWebSocket(request);
+    }
+
     private static TtsStreamResponse invokeWebSocket(TtsStreamRequest request) {
         TtsStreamResponse ttsStreamResponse = new TtsStreamResponse();
         try {
@@ -139,6 +147,23 @@ public abstract class SpeechBaseService {
         return ttsStreamResponse;
     }
 
+    private static AsrStreamResponse invokeWebSocket(AsrStreamRequest request) {
+        AsrStreamResponse asrStreamResponse = new AsrStreamResponse();
+        try {
+            Flowable<Map<String, Object>> stream = stream(request);
+            asrStreamResponse.setStream(stream);
+            asrStreamResponse.setCode(200);
+            asrStreamResponse.setMessage("success");
+            asrStreamResponse.setSuccess(true);
+        } catch (Exception e){
+            logger.severe("invokeWebSocket error: " + e.getMessage());
+            asrStreamResponse.setCode(500);
+            asrStreamResponse.setMessage(e.getMessage());
+            asrStreamResponse.setSuccess(false);
+        }
+        return asrStreamResponse;
+    }
+
     private static Flowable<byte[]> stream(TtsStreamRequest request) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .pingInterval(50, TimeUnit.SECONDS)
@@ -152,6 +177,21 @@ public abstract class SpeechBaseService {
                 .header("X-Api-Connect-Id", UUID.randomUUID().toString())
                 .build();
         return Flowable.create(emitter -> client.newWebSocket(httpRequest, new SpeechWebSocketListener(request.getSpeaker(), request.getInputStream(), emitter)), BackpressureStrategy.BUFFER);
+    }
+
+    private static Flowable<Map<String, Object>> stream(AsrStreamRequest request) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .pingInterval(50, TimeUnit.SECONDS)
+                .connectTimeout(2000, TimeUnit.MILLISECONDS)
+                .build();
+        Request httpRequest = new Request.Builder()
+                .url("wss://openspeech.bytedance.com/api/v3/sauc/bigmodel")
+                .header("X-Api-App-Key", request.getAppId())
+                .header("X-Api-Access-Key", request.getToken())
+                .header("X-Api-Resource-Id", "volc.bigasr.sauc.duration")
+                .header("X-Api-Connect-Id", UUID.randomUUID().toString())
+                .build();
+        return Flowable.create(emitter -> client.newWebSocket(httpRequest, new AsrWebsocketListener(request, request.getInputStream(), emitter)), BackpressureStrategy.BUFFER);
     }
 
 }

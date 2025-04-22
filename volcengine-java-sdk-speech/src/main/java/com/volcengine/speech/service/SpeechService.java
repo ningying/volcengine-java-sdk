@@ -77,6 +77,15 @@ public class SpeechService extends SpeechBaseService {
     }
 
 
+    /**
+     * 流式语音识别
+     * @param request 语音识别请求
+     */
+    public AsrStreamResponse asr(AsrStreamRequest request) {
+        logger.info("streamAsr request: " + new Gson().toJson(request));
+        return execute(request);
+    }
+
 
 
 

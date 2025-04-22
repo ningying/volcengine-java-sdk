@@ -13,9 +13,12 @@ public class Const {
 
     // Message Type:
     public static final byte FULL_CLIENT_REQUEST = 0b0001;
+    public static final byte AUDIO_ONLY_REQUEST = 0b0010;
     public static final byte AUDIO_ONLY_RESPONSE = 0b1011;
     public static final byte FULL_SERVER_RESPONSE = 0b1001;
     public static final byte ERROR_INFORMATION = 0b1111;
+    public static final byte SERVER_ACK = 0b1011;
+    public static final byte SERVER_ERROR_RESPONSE = 0b1111;
 
     // Message Type Specific Flags
     public static final byte MsgTypeFlagNoSeq = 0b0000; // Non-terminal packet with no sequence
@@ -23,12 +26,19 @@ public class Const {
     public static final byte MsgTypeFlagLastNoSeq = 0b10;// last packet with no sequence
     public static final byte MsgTypeFlagNegativeSeq = 0b11; // Payload contains event number (int32)
     public static final byte MsgTypeFlagWithEvent = 0b100;
+    public static final byte NO_SEQUENCE = 0b0000;// no check sequence
+    public static final byte POS_SEQUENCE = 0b0001;
+    public static final byte NEG_SEQUENCE = 0b0010;
+    public static final byte NEG_WITH_SEQUENCE = 0b0011;
+    public static final byte NEG_SEQUENCE_1 = 0b0011;
     // Message Serialization
     public static final byte NO_SERIALIZATION = 0b0000;
     public static final byte JSON = 0b0001;
     // Message Compression
     public static final byte COMPRESSION_NO = 0b0000;
     public static final byte COMPRESSION_GZIP = 0b0001;
+    private static final byte NO_COMPRESSION = 0b0000;
+    public static final byte GZIP = 0b0001;
 
     // event
 
@@ -70,4 +80,39 @@ public class Const {
     public static final int EVENT_TTSSentenceEnd = 351;
 
     public static final int EVENT_TTSResponse = 352;
+
+    public static class ProtocolVersion {
+        static public int PROTOCOL_VERSION = 0b0001;
+    }
+
+    public static class MessageType {
+        static public int AUDIO_ONLY_CLIENT_REQUEST = 0b0010;
+        static public int FULL_SERVER_RESPONSE = 0b1001;
+        static public int SERVER_ACK = 0b1011;
+        static public int ERROR_MESSAGE_FROM_SERVER = 0b1111;
+    }
+
+    public static class MessageTypeFlag {
+        static public int NO_SEQUENCE_NUMBER = 0b0000;
+        static public int POSITIVE_SEQUENCE_CLIENT_ASSGIN = 0b0001;
+        static public int NEGATIVE_SEQUENCE_SERVER_ASSGIN = 0b0010;
+        static public int NEGATIVE_SEQUENCE_CLIENT_ASSGIN = 0b0011;
+    }
+
+    public static class MessageSerial {
+        static public int NO_SERIAL = 0b0000;
+        static public int JSON = 0b0001;
+        static public int CUSTOM_SERIAL = 0b1111;
+    }
+
+    public static class MessageCompress {
+        static public int NO_COMPRESS = 0b0000;
+        static public int GZIP = 0b0001;
+        static public int CUSTOM_COMPRESS = 0b1111;
+    }
+
+    public enum AuthType {
+        TOKEN,
+        SIGNATURE;
+    }
 }
