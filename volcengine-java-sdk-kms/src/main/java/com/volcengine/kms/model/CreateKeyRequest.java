@@ -19,8 +19,11 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.volcengine.kms.model.TagForCreateKeyInput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -45,6 +48,9 @@ public class CreateKeyRequest {
   @SerializedName("KeyringName")
   private String keyringName = null;
 
+  @SerializedName("MultiRegion")
+  private Boolean multiRegion = null;
+
   @SerializedName("Origin")
   private String origin = null;
 
@@ -53,6 +59,9 @@ public class CreateKeyRequest {
 
   @SerializedName("RotateState")
   private String rotateState = null;
+
+  @SerializedName("Tags")
+  private List<TagForCreateKeyInput> tags = null;
 
   public CreateKeyRequest description(String description) {
     this.description = description;
@@ -146,6 +155,24 @@ public class CreateKeyRequest {
     this.keyringName = keyringName;
   }
 
+  public CreateKeyRequest multiRegion(Boolean multiRegion) {
+    this.multiRegion = multiRegion;
+    return this;
+  }
+
+   /**
+   * Get multiRegion
+   * @return multiRegion
+  **/
+  @Schema(description = "")
+  public Boolean isMultiRegion() {
+    return multiRegion;
+  }
+
+  public void setMultiRegion(Boolean multiRegion) {
+    this.multiRegion = multiRegion;
+  }
+
   public CreateKeyRequest origin(String origin) {
     this.origin = origin;
     return this;
@@ -200,6 +227,33 @@ public class CreateKeyRequest {
     this.rotateState = rotateState;
   }
 
+  public CreateKeyRequest tags(List<TagForCreateKeyInput> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public CreateKeyRequest addTagsItem(TagForCreateKeyInput tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<TagForCreateKeyInput>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<TagForCreateKeyInput> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<TagForCreateKeyInput> tags) {
+    this.tags = tags;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -215,14 +269,16 @@ public class CreateKeyRequest {
         Objects.equals(this.keySpec, createKeyRequest.keySpec) &&
         Objects.equals(this.keyUsage, createKeyRequest.keyUsage) &&
         Objects.equals(this.keyringName, createKeyRequest.keyringName) &&
+        Objects.equals(this.multiRegion, createKeyRequest.multiRegion) &&
         Objects.equals(this.origin, createKeyRequest.origin) &&
         Objects.equals(this.protectionLevel, createKeyRequest.protectionLevel) &&
-        Objects.equals(this.rotateState, createKeyRequest.rotateState);
+        Objects.equals(this.rotateState, createKeyRequest.rotateState) &&
+        Objects.equals(this.tags, createKeyRequest.tags);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, keyName, keySpec, keyUsage, keyringName, origin, protectionLevel, rotateState);
+    return Objects.hash(description, keyName, keySpec, keyUsage, keyringName, multiRegion, origin, protectionLevel, rotateState, tags);
   }
 
 
@@ -236,9 +292,11 @@ public class CreateKeyRequest {
     sb.append("    keySpec: ").append(toIndentedString(keySpec)).append("\n");
     sb.append("    keyUsage: ").append(toIndentedString(keyUsage)).append("\n");
     sb.append("    keyringName: ").append(toIndentedString(keyringName)).append("\n");
+    sb.append("    multiRegion: ").append(toIndentedString(multiRegion)).append("\n");
     sb.append("    origin: ").append(toIndentedString(origin)).append("\n");
     sb.append("    protectionLevel: ").append(toIndentedString(protectionLevel)).append("\n");
     sb.append("    rotateState: ").append(toIndentedString(rotateState)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("}");
     return sb.toString();
   }

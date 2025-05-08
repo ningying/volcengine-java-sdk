@@ -19,8 +19,12 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.volcengine.kms.model.MultiRegionConfigurationForCreateKeyOutput;
+import com.volcengine.kms.model.TagForCreateKeyOutput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -35,9 +39,6 @@ public class KeyForCreateKeyOutput {
 
   @SerializedName("Description")
   private String description = null;
-
-  @SerializedName("EncryptionAlgorithms")
-  private String encryptionAlgorithms = null;
 
   @SerializedName("ID")
   private String ID = null;
@@ -60,6 +61,12 @@ public class KeyForCreateKeyOutput {
   @SerializedName("LastRotationTime")
   private String lastRotationTime = null;
 
+  @SerializedName("MultiRegion")
+  private Boolean multiRegion = null;
+
+  @SerializedName("MultiRegionConfiguration")
+  private MultiRegionConfigurationForCreateKeyOutput multiRegionConfiguration = null;
+
   @SerializedName("Origin")
   private String origin = null;
 
@@ -74,6 +81,9 @@ public class KeyForCreateKeyOutput {
 
   @SerializedName("ScheduleRotationTime")
   private String scheduleRotationTime = null;
+
+  @SerializedName("Tags")
+  private List<TagForCreateKeyOutput> tags = null;
 
   @SerializedName("Trn")
   private String trn = null;
@@ -115,24 +125,6 @@ public class KeyForCreateKeyOutput {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  public KeyForCreateKeyOutput encryptionAlgorithms(String encryptionAlgorithms) {
-    this.encryptionAlgorithms = encryptionAlgorithms;
-    return this;
-  }
-
-   /**
-   * Get encryptionAlgorithms
-   * @return encryptionAlgorithms
-  **/
-  @Schema(description = "")
-  public String getEncryptionAlgorithms() {
-    return encryptionAlgorithms;
-  }
-
-  public void setEncryptionAlgorithms(String encryptionAlgorithms) {
-    this.encryptionAlgorithms = encryptionAlgorithms;
   }
 
   public KeyForCreateKeyOutput ID(String ID) {
@@ -261,6 +253,43 @@ public class KeyForCreateKeyOutput {
     this.lastRotationTime = lastRotationTime;
   }
 
+  public KeyForCreateKeyOutput multiRegion(Boolean multiRegion) {
+    this.multiRegion = multiRegion;
+    return this;
+  }
+
+   /**
+   * Get multiRegion
+   * @return multiRegion
+  **/
+  @Schema(description = "")
+  public Boolean isMultiRegion() {
+    return multiRegion;
+  }
+
+  public void setMultiRegion(Boolean multiRegion) {
+    this.multiRegion = multiRegion;
+  }
+
+  public KeyForCreateKeyOutput multiRegionConfiguration(MultiRegionConfigurationForCreateKeyOutput multiRegionConfiguration) {
+    this.multiRegionConfiguration = multiRegionConfiguration;
+    return this;
+  }
+
+   /**
+   * Get multiRegionConfiguration
+   * @return multiRegionConfiguration
+  **/
+  @Valid
+  @Schema(description = "")
+  public MultiRegionConfigurationForCreateKeyOutput getMultiRegionConfiguration() {
+    return multiRegionConfiguration;
+  }
+
+  public void setMultiRegionConfiguration(MultiRegionConfigurationForCreateKeyOutput multiRegionConfiguration) {
+    this.multiRegionConfiguration = multiRegionConfiguration;
+  }
+
   public KeyForCreateKeyOutput origin(String origin) {
     this.origin = origin;
     return this;
@@ -351,6 +380,33 @@ public class KeyForCreateKeyOutput {
     this.scheduleRotationTime = scheduleRotationTime;
   }
 
+  public KeyForCreateKeyOutput tags(List<TagForCreateKeyOutput> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public KeyForCreateKeyOutput addTagsItem(TagForCreateKeyOutput tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<TagForCreateKeyOutput>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<TagForCreateKeyOutput> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<TagForCreateKeyOutput> tags) {
+    this.tags = tags;
+  }
+
   public KeyForCreateKeyOutput trn(String trn) {
     this.trn = trn;
     return this;
@@ -399,7 +455,6 @@ public class KeyForCreateKeyOutput {
     KeyForCreateKeyOutput keyForCreateKeyOutput = (KeyForCreateKeyOutput) o;
     return Objects.equals(this.creationDate, keyForCreateKeyOutput.creationDate) &&
         Objects.equals(this.description, keyForCreateKeyOutput.description) &&
-        Objects.equals(this.encryptionAlgorithms, keyForCreateKeyOutput.encryptionAlgorithms) &&
         Objects.equals(this.ID, keyForCreateKeyOutput.ID) &&
         Objects.equals(this.keyMaterialExpireTime, keyForCreateKeyOutput.keyMaterialExpireTime) &&
         Objects.equals(this.keyName, keyForCreateKeyOutput.keyName) &&
@@ -407,18 +462,21 @@ public class KeyForCreateKeyOutput {
         Objects.equals(this.keyState, keyForCreateKeyOutput.keyState) &&
         Objects.equals(this.keyUsage, keyForCreateKeyOutput.keyUsage) &&
         Objects.equals(this.lastRotationTime, keyForCreateKeyOutput.lastRotationTime) &&
+        Objects.equals(this.multiRegion, keyForCreateKeyOutput.multiRegion) &&
+        Objects.equals(this.multiRegionConfiguration, keyForCreateKeyOutput.multiRegionConfiguration) &&
         Objects.equals(this.origin, keyForCreateKeyOutput.origin) &&
         Objects.equals(this.protectionLevel, keyForCreateKeyOutput.protectionLevel) &&
         Objects.equals(this.rotationState, keyForCreateKeyOutput.rotationState) &&
         Objects.equals(this.scheduleDeleteTime, keyForCreateKeyOutput.scheduleDeleteTime) &&
         Objects.equals(this.scheduleRotationTime, keyForCreateKeyOutput.scheduleRotationTime) &&
+        Objects.equals(this.tags, keyForCreateKeyOutput.tags) &&
         Objects.equals(this.trn, keyForCreateKeyOutput.trn) &&
         Objects.equals(this.updateDate, keyForCreateKeyOutput.updateDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(creationDate, description, encryptionAlgorithms, ID, keyMaterialExpireTime, keyName, keySpec, keyState, keyUsage, lastRotationTime, origin, protectionLevel, rotationState, scheduleDeleteTime, scheduleRotationTime, trn, updateDate);
+    return Objects.hash(creationDate, description, ID, keyMaterialExpireTime, keyName, keySpec, keyState, keyUsage, lastRotationTime, multiRegion, multiRegionConfiguration, origin, protectionLevel, rotationState, scheduleDeleteTime, scheduleRotationTime, tags, trn, updateDate);
   }
 
 
@@ -429,7 +487,6 @@ public class KeyForCreateKeyOutput {
     
     sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    encryptionAlgorithms: ").append(toIndentedString(encryptionAlgorithms)).append("\n");
     sb.append("    ID: ").append(toIndentedString(ID)).append("\n");
     sb.append("    keyMaterialExpireTime: ").append(toIndentedString(keyMaterialExpireTime)).append("\n");
     sb.append("    keyName: ").append(toIndentedString(keyName)).append("\n");
@@ -437,11 +494,14 @@ public class KeyForCreateKeyOutput {
     sb.append("    keyState: ").append(toIndentedString(keyState)).append("\n");
     sb.append("    keyUsage: ").append(toIndentedString(keyUsage)).append("\n");
     sb.append("    lastRotationTime: ").append(toIndentedString(lastRotationTime)).append("\n");
+    sb.append("    multiRegion: ").append(toIndentedString(multiRegion)).append("\n");
+    sb.append("    multiRegionConfiguration: ").append(toIndentedString(multiRegionConfiguration)).append("\n");
     sb.append("    origin: ").append(toIndentedString(origin)).append("\n");
     sb.append("    protectionLevel: ").append(toIndentedString(protectionLevel)).append("\n");
     sb.append("    rotationState: ").append(toIndentedString(rotationState)).append("\n");
     sb.append("    scheduleDeleteTime: ").append(toIndentedString(scheduleDeleteTime)).append("\n");
     sb.append("    scheduleRotationTime: ").append(toIndentedString(scheduleRotationTime)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    trn: ").append(toIndentedString(trn)).append("\n");
     sb.append("    updateDate: ").append(toIndentedString(updateDate)).append("\n");
     sb.append("}");

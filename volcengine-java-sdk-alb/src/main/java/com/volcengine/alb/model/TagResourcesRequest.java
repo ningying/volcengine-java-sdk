@@ -46,7 +46,15 @@ public class TagResourcesRequest {
     @SerializedName("listener")
     LISTENER("listener"),
     @SerializedName("servergroup")
-    SERVERGROUP("servergroup");
+    SERVERGROUP("servergroup"),
+    @SerializedName("acl")
+    ACL("acl"),
+    @SerializedName("certificate")
+    CERTIFICATE("certificate"),
+    @SerializedName("customizedcfg")
+    CUSTOMIZEDCFG("customizedcfg"),
+    @SerializedName("healthchecktemplate")
+    HEALTHCHECKTEMPLATE("healthchecktemplate");
 
     private String value;
 

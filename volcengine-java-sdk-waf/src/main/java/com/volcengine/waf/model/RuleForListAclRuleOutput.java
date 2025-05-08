@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.volcengine.waf.model.AccurateGroupForListAclRuleOutput;
 import com.volcengine.waf.model.HostGroupForListAclRuleOutput;
+import com.volcengine.waf.model.IpGroupForListAclRuleOutput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class RuleForListAclRuleOutput {
   @SerializedName("Advanced")
   private Integer advanced = null;
 
+  @SerializedName("ClientIp")
+  private String clientIp = null;
+
   @SerializedName("Description")
   private String description = null;
 
@@ -64,8 +68,14 @@ public class RuleForListAclRuleOutput {
   @SerializedName("ID")
   private Integer ID = null;
 
+  @SerializedName("IpAddType")
+  private Integer ipAddType = null;
+
+  @SerializedName("IpGroupId")
+  private List<Integer> ipGroupId = null;
+
   @SerializedName("IpGroups")
-  private Integer ipGroups = null;
+  private List<IpGroupForListAclRuleOutput> ipGroups = null;
 
   @SerializedName("IpList")
   private List<String> ipList = null;
@@ -73,8 +83,11 @@ public class RuleForListAclRuleOutput {
   @SerializedName("IpLocationCountry")
   private List<String> ipLocationCountry = null;
 
+  @SerializedName("IpLocationSubregion")
+  private List<String> ipLocationSubregion = null;
+
   @SerializedName("Name")
-  private List<String> name = null;
+  private String name = null;
 
   @SerializedName("PrefixSwitch")
   private List<String> prefixSwitch = null;
@@ -141,6 +154,24 @@ public class RuleForListAclRuleOutput {
 
   public void setAdvanced(Integer advanced) {
     this.advanced = advanced;
+  }
+
+  public RuleForListAclRuleOutput clientIp(String clientIp) {
+    this.clientIp = clientIp;
+    return this;
+  }
+
+   /**
+   * Get clientIp
+   * @return clientIp
+  **/
+  @Schema(description = "")
+  public String getClientIp() {
+    return clientIp;
+  }
+
+  public void setClientIp(String clientIp) {
+    this.clientIp = clientIp;
   }
 
   public RuleForListAclRuleOutput description(String description) {
@@ -294,8 +325,60 @@ public class RuleForListAclRuleOutput {
     this.ID = ID;
   }
 
-  public RuleForListAclRuleOutput ipGroups(Integer ipGroups) {
+  public RuleForListAclRuleOutput ipAddType(Integer ipAddType) {
+    this.ipAddType = ipAddType;
+    return this;
+  }
+
+   /**
+   * Get ipAddType
+   * @return ipAddType
+  **/
+  @Schema(description = "")
+  public Integer getIpAddType() {
+    return ipAddType;
+  }
+
+  public void setIpAddType(Integer ipAddType) {
+    this.ipAddType = ipAddType;
+  }
+
+  public RuleForListAclRuleOutput ipGroupId(List<Integer> ipGroupId) {
+    this.ipGroupId = ipGroupId;
+    return this;
+  }
+
+  public RuleForListAclRuleOutput addIpGroupIdItem(Integer ipGroupIdItem) {
+    if (this.ipGroupId == null) {
+      this.ipGroupId = new ArrayList<Integer>();
+    }
+    this.ipGroupId.add(ipGroupIdItem);
+    return this;
+  }
+
+   /**
+   * Get ipGroupId
+   * @return ipGroupId
+  **/
+  @Schema(description = "")
+  public List<Integer> getIpGroupId() {
+    return ipGroupId;
+  }
+
+  public void setIpGroupId(List<Integer> ipGroupId) {
+    this.ipGroupId = ipGroupId;
+  }
+
+  public RuleForListAclRuleOutput ipGroups(List<IpGroupForListAclRuleOutput> ipGroups) {
     this.ipGroups = ipGroups;
+    return this;
+  }
+
+  public RuleForListAclRuleOutput addIpGroupsItem(IpGroupForListAclRuleOutput ipGroupsItem) {
+    if (this.ipGroups == null) {
+      this.ipGroups = new ArrayList<IpGroupForListAclRuleOutput>();
+    }
+    this.ipGroups.add(ipGroupsItem);
     return this;
   }
 
@@ -303,12 +386,13 @@ public class RuleForListAclRuleOutput {
    * Get ipGroups
    * @return ipGroups
   **/
+  @Valid
   @Schema(description = "")
-  public Integer getIpGroups() {
+  public List<IpGroupForListAclRuleOutput> getIpGroups() {
     return ipGroups;
   }
 
-  public void setIpGroups(Integer ipGroups) {
+  public void setIpGroups(List<IpGroupForListAclRuleOutput> ipGroups) {
     this.ipGroups = ipGroups;
   }
 
@@ -364,16 +448,34 @@ public class RuleForListAclRuleOutput {
     this.ipLocationCountry = ipLocationCountry;
   }
 
-  public RuleForListAclRuleOutput name(List<String> name) {
-    this.name = name;
+  public RuleForListAclRuleOutput ipLocationSubregion(List<String> ipLocationSubregion) {
+    this.ipLocationSubregion = ipLocationSubregion;
     return this;
   }
 
-  public RuleForListAclRuleOutput addNameItem(String nameItem) {
-    if (this.name == null) {
-      this.name = new ArrayList<String>();
+  public RuleForListAclRuleOutput addIpLocationSubregionItem(String ipLocationSubregionItem) {
+    if (this.ipLocationSubregion == null) {
+      this.ipLocationSubregion = new ArrayList<String>();
     }
-    this.name.add(nameItem);
+    this.ipLocationSubregion.add(ipLocationSubregionItem);
+    return this;
+  }
+
+   /**
+   * Get ipLocationSubregion
+   * @return ipLocationSubregion
+  **/
+  @Schema(description = "")
+  public List<String> getIpLocationSubregion() {
+    return ipLocationSubregion;
+  }
+
+  public void setIpLocationSubregion(List<String> ipLocationSubregion) {
+    this.ipLocationSubregion = ipLocationSubregion;
+  }
+
+  public RuleForListAclRuleOutput name(String name) {
+    this.name = name;
     return this;
   }
 
@@ -382,11 +484,11 @@ public class RuleForListAclRuleOutput {
    * @return name
   **/
   @Schema(description = "")
-  public List<String> getName() {
+  public String getName() {
     return name;
   }
 
-  public void setName(List<String> name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -483,6 +585,7 @@ public class RuleForListAclRuleOutput {
     return Objects.equals(this.accurateGroup, ruleForListAclRuleOutput.accurateGroup) &&
         Objects.equals(this.action, ruleForListAclRuleOutput.action) &&
         Objects.equals(this.advanced, ruleForListAclRuleOutput.advanced) &&
+        Objects.equals(this.clientIp, ruleForListAclRuleOutput.clientIp) &&
         Objects.equals(this.description, ruleForListAclRuleOutput.description) &&
         Objects.equals(this.enable, ruleForListAclRuleOutput.enable) &&
         Objects.equals(this.hostAddType, ruleForListAclRuleOutput.hostAddType) &&
@@ -490,9 +593,12 @@ public class RuleForListAclRuleOutput {
         Objects.equals(this.hostGroups, ruleForListAclRuleOutput.hostGroups) &&
         Objects.equals(this.hostList, ruleForListAclRuleOutput.hostList) &&
         Objects.equals(this.ID, ruleForListAclRuleOutput.ID) &&
+        Objects.equals(this.ipAddType, ruleForListAclRuleOutput.ipAddType) &&
+        Objects.equals(this.ipGroupId, ruleForListAclRuleOutput.ipGroupId) &&
         Objects.equals(this.ipGroups, ruleForListAclRuleOutput.ipGroups) &&
         Objects.equals(this.ipList, ruleForListAclRuleOutput.ipList) &&
         Objects.equals(this.ipLocationCountry, ruleForListAclRuleOutput.ipLocationCountry) &&
+        Objects.equals(this.ipLocationSubregion, ruleForListAclRuleOutput.ipLocationSubregion) &&
         Objects.equals(this.name, ruleForListAclRuleOutput.name) &&
         Objects.equals(this.prefixSwitch, ruleForListAclRuleOutput.prefixSwitch) &&
         Objects.equals(this.ruleTag, ruleForListAclRuleOutput.ruleTag) &&
@@ -502,7 +608,7 @@ public class RuleForListAclRuleOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accurateGroup, action, advanced, description, enable, hostAddType, hostGroupId, hostGroups, hostList, ID, ipGroups, ipList, ipLocationCountry, name, prefixSwitch, ruleTag, updateTime, url);
+    return Objects.hash(accurateGroup, action, advanced, clientIp, description, enable, hostAddType, hostGroupId, hostGroups, hostList, ID, ipAddType, ipGroupId, ipGroups, ipList, ipLocationCountry, ipLocationSubregion, name, prefixSwitch, ruleTag, updateTime, url);
   }
 
 
@@ -514,6 +620,7 @@ public class RuleForListAclRuleOutput {
     sb.append("    accurateGroup: ").append(toIndentedString(accurateGroup)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    advanced: ").append(toIndentedString(advanced)).append("\n");
+    sb.append("    clientIp: ").append(toIndentedString(clientIp)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    enable: ").append(toIndentedString(enable)).append("\n");
     sb.append("    hostAddType: ").append(toIndentedString(hostAddType)).append("\n");
@@ -521,9 +628,12 @@ public class RuleForListAclRuleOutput {
     sb.append("    hostGroups: ").append(toIndentedString(hostGroups)).append("\n");
     sb.append("    hostList: ").append(toIndentedString(hostList)).append("\n");
     sb.append("    ID: ").append(toIndentedString(ID)).append("\n");
+    sb.append("    ipAddType: ").append(toIndentedString(ipAddType)).append("\n");
+    sb.append("    ipGroupId: ").append(toIndentedString(ipGroupId)).append("\n");
     sb.append("    ipGroups: ").append(toIndentedString(ipGroups)).append("\n");
     sb.append("    ipList: ").append(toIndentedString(ipList)).append("\n");
     sb.append("    ipLocationCountry: ").append(toIndentedString(ipLocationCountry)).append("\n");
+    sb.append("    ipLocationSubregion: ").append(toIndentedString(ipLocationSubregion)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    prefixSwitch: ").append(toIndentedString(prefixSwitch)).append("\n");
     sb.append("    ruleTag: ").append(toIndentedString(ruleTag)).append("\n");

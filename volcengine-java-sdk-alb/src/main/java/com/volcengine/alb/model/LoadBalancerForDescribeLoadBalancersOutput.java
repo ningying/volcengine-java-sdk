@@ -70,6 +70,9 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
   @SerializedName("LoadBalancerBillingType")
   private Integer loadBalancerBillingType = null;
 
+  @SerializedName("LoadBalancerEdition")
+  private String loadBalancerEdition = null;
+
   @SerializedName("LoadBalancerId")
   private String loadBalancerId = null;
 
@@ -81,6 +84,12 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
 
   @SerializedName("LockReason")
   private String lockReason = null;
+
+  @SerializedName("ModificationProtectionReason")
+  private String modificationProtectionReason = null;
+
+  @SerializedName("ModificationProtectionStatus")
+  private String modificationProtectionStatus = null;
 
   @SerializedName("OverdueTime")
   private String overdueTime = null;
@@ -334,6 +343,24 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
     this.loadBalancerBillingType = loadBalancerBillingType;
   }
 
+  public LoadBalancerForDescribeLoadBalancersOutput loadBalancerEdition(String loadBalancerEdition) {
+    this.loadBalancerEdition = loadBalancerEdition;
+    return this;
+  }
+
+   /**
+   * Get loadBalancerEdition
+   * @return loadBalancerEdition
+  **/
+  @Schema(description = "")
+  public String getLoadBalancerEdition() {
+    return loadBalancerEdition;
+  }
+
+  public void setLoadBalancerEdition(String loadBalancerEdition) {
+    this.loadBalancerEdition = loadBalancerEdition;
+  }
+
   public LoadBalancerForDescribeLoadBalancersOutput loadBalancerId(String loadBalancerId) {
     this.loadBalancerId = loadBalancerId;
     return this;
@@ -412,6 +439,42 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
 
   public void setLockReason(String lockReason) {
     this.lockReason = lockReason;
+  }
+
+  public LoadBalancerForDescribeLoadBalancersOutput modificationProtectionReason(String modificationProtectionReason) {
+    this.modificationProtectionReason = modificationProtectionReason;
+    return this;
+  }
+
+   /**
+   * Get modificationProtectionReason
+   * @return modificationProtectionReason
+  **/
+  @Schema(description = "")
+  public String getModificationProtectionReason() {
+    return modificationProtectionReason;
+  }
+
+  public void setModificationProtectionReason(String modificationProtectionReason) {
+    this.modificationProtectionReason = modificationProtectionReason;
+  }
+
+  public LoadBalancerForDescribeLoadBalancersOutput modificationProtectionStatus(String modificationProtectionStatus) {
+    this.modificationProtectionStatus = modificationProtectionStatus;
+    return this;
+  }
+
+   /**
+   * Get modificationProtectionStatus
+   * @return modificationProtectionStatus
+  **/
+  @Schema(description = "")
+  public String getModificationProtectionStatus() {
+    return modificationProtectionStatus;
+  }
+
+  public void setModificationProtectionStatus(String modificationProtectionStatus) {
+    this.modificationProtectionStatus = modificationProtectionStatus;
   }
 
   public LoadBalancerForDescribeLoadBalancersOutput overdueTime(String overdueTime) {
@@ -670,10 +733,13 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
         Objects.equals(this.eniAddress, loadBalancerForDescribeLoadBalancersOutput.eniAddress) &&
         Objects.equals(this.eniId, loadBalancerForDescribeLoadBalancersOutput.eniId) &&
         Objects.equals(this.loadBalancerBillingType, loadBalancerForDescribeLoadBalancersOutput.loadBalancerBillingType) &&
+        Objects.equals(this.loadBalancerEdition, loadBalancerForDescribeLoadBalancersOutput.loadBalancerEdition) &&
         Objects.equals(this.loadBalancerId, loadBalancerForDescribeLoadBalancersOutput.loadBalancerId) &&
         Objects.equals(this.loadBalancerName, loadBalancerForDescribeLoadBalancersOutput.loadBalancerName) &&
         Objects.equals(this.localAddresses, loadBalancerForDescribeLoadBalancersOutput.localAddresses) &&
         Objects.equals(this.lockReason, loadBalancerForDescribeLoadBalancersOutput.lockReason) &&
+        Objects.equals(this.modificationProtectionReason, loadBalancerForDescribeLoadBalancersOutput.modificationProtectionReason) &&
+        Objects.equals(this.modificationProtectionStatus, loadBalancerForDescribeLoadBalancersOutput.modificationProtectionStatus) &&
         Objects.equals(this.overdueTime, loadBalancerForDescribeLoadBalancersOutput.overdueTime) &&
         Objects.equals(this.projectName, loadBalancerForDescribeLoadBalancersOutput.projectName) &&
         Objects.equals(this.sniAutoMatch, loadBalancerForDescribeLoadBalancersOutput.sniAutoMatch) &&
@@ -690,7 +756,7 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(addressIpVersion, businessStatus, createTime, dnSName, deleteProtection, deletedTime, description, eipAddress, eipId, eniAddress, eniId, loadBalancerBillingType, loadBalancerId, loadBalancerName, localAddresses, lockReason, overdueTime, projectName, sniAutoMatch, status, subnetId, tags, type, updateTime, vpcId, wafInstanceId, wafProtectionEnabled, zoneMappings);
+    return Objects.hash(addressIpVersion, businessStatus, createTime, dnSName, deleteProtection, deletedTime, description, eipAddress, eipId, eniAddress, eniId, loadBalancerBillingType, loadBalancerEdition, loadBalancerId, loadBalancerName, localAddresses, lockReason, modificationProtectionReason, modificationProtectionStatus, overdueTime, projectName, sniAutoMatch, status, subnetId, tags, type, updateTime, vpcId, wafInstanceId, wafProtectionEnabled, zoneMappings);
   }
 
 
@@ -711,10 +777,13 @@ public class LoadBalancerForDescribeLoadBalancersOutput {
     sb.append("    eniAddress: ").append(toIndentedString(eniAddress)).append("\n");
     sb.append("    eniId: ").append(toIndentedString(eniId)).append("\n");
     sb.append("    loadBalancerBillingType: ").append(toIndentedString(loadBalancerBillingType)).append("\n");
+    sb.append("    loadBalancerEdition: ").append(toIndentedString(loadBalancerEdition)).append("\n");
     sb.append("    loadBalancerId: ").append(toIndentedString(loadBalancerId)).append("\n");
     sb.append("    loadBalancerName: ").append(toIndentedString(loadBalancerName)).append("\n");
     sb.append("    localAddresses: ").append(toIndentedString(localAddresses)).append("\n");
     sb.append("    lockReason: ").append(toIndentedString(lockReason)).append("\n");
+    sb.append("    modificationProtectionReason: ").append(toIndentedString(modificationProtectionReason)).append("\n");
+    sb.append("    modificationProtectionStatus: ").append(toIndentedString(modificationProtectionStatus)).append("\n");
     sb.append("    overdueTime: ").append(toIndentedString(overdueTime)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    sniAutoMatch: ").append(toIndentedString(sniAutoMatch)).append("\n");

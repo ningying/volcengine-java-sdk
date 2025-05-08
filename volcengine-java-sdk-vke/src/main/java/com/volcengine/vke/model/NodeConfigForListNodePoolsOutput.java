@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.volcengine.vke.model.DataVolumeForListNodePoolsOutput;
+import com.volcengine.vke.model.PublicAccessConfigForListNodePoolsOutput;
 import com.volcengine.vke.model.SecurityForListNodePoolsOutput;
 import com.volcengine.vke.model.SystemVolumeForListNodePoolsOutput;
 import com.volcengine.vke.model.TagForListNodePoolsOutput;
@@ -32,6 +33,7 @@ import javax.validation.Valid;
 /**
  * NodeConfigForListNodePoolsOutput
  */
+
 
 
 public class NodeConfigForListNodePoolsOutput {
@@ -47,6 +49,12 @@ public class NodeConfigForListNodePoolsOutput {
   @SerializedName("DataVolumes")
   private List<DataVolumeForListNodePoolsOutput> dataVolumes = null;
 
+  @SerializedName("DeploymentSetGroupNumber")
+  private Integer deploymentSetGroupNumber = null;
+
+  @SerializedName("DeploymentSetId")
+  private String deploymentSetId = null;
+
   @SerializedName("HpcClusterIds")
   private List<String> hpcClusterIds = null;
 
@@ -56,8 +64,51 @@ public class NodeConfigForListNodePoolsOutput {
   @SerializedName("InitializeScript")
   private String initializeScript = null;
 
-  @SerializedName("InstanceChargeType")
-  private String instanceChargeType = null;
+  /**
+   * Gets or Sets instanceChargeType
+   */
+  @JsonAdapter(InstanceChargeTypeEnum.Adapter.class)
+  public enum InstanceChargeTypeEnum {
+    @SerializedName("PostPaid")
+    POSTPAID("PostPaid"),
+    @SerializedName("PrePaid")
+    PREPAID("PrePaid");
+
+    private String value;
+
+    InstanceChargeTypeEnum(String value) {
+      this.value = value;
+    }
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    public static InstanceChargeTypeEnum fromValue(String input) {
+      for (InstanceChargeTypeEnum b : InstanceChargeTypeEnum.values()) {
+        if (b.value.equals(input)) {
+          return b;
+        }
+      }
+      return null;
+    }
+    public static class Adapter extends TypeAdapter<InstanceChargeTypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final InstanceChargeTypeEnum enumeration) throws IOException {
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
+      }
+
+      @Override
+      public InstanceChargeTypeEnum read(final JsonReader jsonReader) throws IOException {
+        Object value = jsonReader.nextString();
+        return InstanceChargeTypeEnum.fromValue((String)(value));
+      }
+    }
+  }  @SerializedName("InstanceChargeType")
+  private InstanceChargeTypeEnum instanceChargeType = null;
 
   @SerializedName("InstanceTypeIds")
   private List<String> instanceTypeIds = null;
@@ -67,6 +118,15 @@ public class NodeConfigForListNodePoolsOutput {
 
   @SerializedName("Period")
   private Integer period = null;
+
+  @SerializedName("ProjectName")
+  private String projectName = null;
+
+  @SerializedName("PublicAccessConfig")
+  private PublicAccessConfigForListNodePoolsOutput publicAccessConfig = null;
+
+  @SerializedName("PublicAccessEnabled")
+  private Boolean publicAccessEnabled = null;
 
   @SerializedName("Security")
   private SecurityForListNodePoolsOutput security = null;
@@ -161,6 +221,42 @@ public class NodeConfigForListNodePoolsOutput {
     this.dataVolumes = dataVolumes;
   }
 
+  public NodeConfigForListNodePoolsOutput deploymentSetGroupNumber(Integer deploymentSetGroupNumber) {
+    this.deploymentSetGroupNumber = deploymentSetGroupNumber;
+    return this;
+  }
+
+   /**
+   * Get deploymentSetGroupNumber
+   * @return deploymentSetGroupNumber
+  **/
+  @Schema(description = "")
+  public Integer getDeploymentSetGroupNumber() {
+    return deploymentSetGroupNumber;
+  }
+
+  public void setDeploymentSetGroupNumber(Integer deploymentSetGroupNumber) {
+    this.deploymentSetGroupNumber = deploymentSetGroupNumber;
+  }
+
+  public NodeConfigForListNodePoolsOutput deploymentSetId(String deploymentSetId) {
+    this.deploymentSetId = deploymentSetId;
+    return this;
+  }
+
+   /**
+   * Get deploymentSetId
+   * @return deploymentSetId
+  **/
+  @Schema(description = "")
+  public String getDeploymentSetId() {
+    return deploymentSetId;
+  }
+
+  public void setDeploymentSetId(String deploymentSetId) {
+    this.deploymentSetId = deploymentSetId;
+  }
+
   public NodeConfigForListNodePoolsOutput hpcClusterIds(List<String> hpcClusterIds) {
     this.hpcClusterIds = hpcClusterIds;
     return this;
@@ -223,7 +319,7 @@ public class NodeConfigForListNodePoolsOutput {
     this.initializeScript = initializeScript;
   }
 
-  public NodeConfigForListNodePoolsOutput instanceChargeType(String instanceChargeType) {
+  public NodeConfigForListNodePoolsOutput instanceChargeType(InstanceChargeTypeEnum instanceChargeType) {
     this.instanceChargeType = instanceChargeType;
     return this;
   }
@@ -233,11 +329,11 @@ public class NodeConfigForListNodePoolsOutput {
    * @return instanceChargeType
   **/
   @Schema(description = "")
-  public String getInstanceChargeType() {
+  public InstanceChargeTypeEnum getInstanceChargeType() {
     return instanceChargeType;
   }
 
-  public void setInstanceChargeType(String instanceChargeType) {
+  public void setInstanceChargeType(InstanceChargeTypeEnum instanceChargeType) {
     this.instanceChargeType = instanceChargeType;
   }
 
@@ -301,6 +397,61 @@ public class NodeConfigForListNodePoolsOutput {
 
   public void setPeriod(Integer period) {
     this.period = period;
+  }
+
+  public NodeConfigForListNodePoolsOutput projectName(String projectName) {
+    this.projectName = projectName;
+    return this;
+  }
+
+   /**
+   * Get projectName
+   * @return projectName
+  **/
+  @Schema(description = "")
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
+  public NodeConfigForListNodePoolsOutput publicAccessConfig(PublicAccessConfigForListNodePoolsOutput publicAccessConfig) {
+    this.publicAccessConfig = publicAccessConfig;
+    return this;
+  }
+
+   /**
+   * Get publicAccessConfig
+   * @return publicAccessConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public PublicAccessConfigForListNodePoolsOutput getPublicAccessConfig() {
+    return publicAccessConfig;
+  }
+
+  public void setPublicAccessConfig(PublicAccessConfigForListNodePoolsOutput publicAccessConfig) {
+    this.publicAccessConfig = publicAccessConfig;
+  }
+
+  public NodeConfigForListNodePoolsOutput publicAccessEnabled(Boolean publicAccessEnabled) {
+    this.publicAccessEnabled = publicAccessEnabled;
+    return this;
+  }
+
+   /**
+   * Get publicAccessEnabled
+   * @return publicAccessEnabled
+  **/
+  @Schema(description = "")
+  public Boolean isPublicAccessEnabled() {
+    return publicAccessEnabled;
+  }
+
+  public void setPublicAccessEnabled(Boolean publicAccessEnabled) {
+    this.publicAccessEnabled = publicAccessEnabled;
   }
 
   public NodeConfigForListNodePoolsOutput security(SecurityForListNodePoolsOutput security) {
@@ -408,6 +559,8 @@ public class NodeConfigForListNodePoolsOutput {
         Objects.equals(this.autoRenew, nodeConfigForListNodePoolsOutput.autoRenew) &&
         Objects.equals(this.autoRenewPeriod, nodeConfigForListNodePoolsOutput.autoRenewPeriod) &&
         Objects.equals(this.dataVolumes, nodeConfigForListNodePoolsOutput.dataVolumes) &&
+        Objects.equals(this.deploymentSetGroupNumber, nodeConfigForListNodePoolsOutput.deploymentSetGroupNumber) &&
+        Objects.equals(this.deploymentSetId, nodeConfigForListNodePoolsOutput.deploymentSetId) &&
         Objects.equals(this.hpcClusterIds, nodeConfigForListNodePoolsOutput.hpcClusterIds) &&
         Objects.equals(this.imageId, nodeConfigForListNodePoolsOutput.imageId) &&
         Objects.equals(this.initializeScript, nodeConfigForListNodePoolsOutput.initializeScript) &&
@@ -415,6 +568,9 @@ public class NodeConfigForListNodePoolsOutput {
         Objects.equals(this.instanceTypeIds, nodeConfigForListNodePoolsOutput.instanceTypeIds) &&
         Objects.equals(this.namePrefix, nodeConfigForListNodePoolsOutput.namePrefix) &&
         Objects.equals(this.period, nodeConfigForListNodePoolsOutput.period) &&
+        Objects.equals(this.projectName, nodeConfigForListNodePoolsOutput.projectName) &&
+        Objects.equals(this.publicAccessConfig, nodeConfigForListNodePoolsOutput.publicAccessConfig) &&
+        Objects.equals(this.publicAccessEnabled, nodeConfigForListNodePoolsOutput.publicAccessEnabled) &&
         Objects.equals(this.security, nodeConfigForListNodePoolsOutput.security) &&
         Objects.equals(this.subnetIds, nodeConfigForListNodePoolsOutput.subnetIds) &&
         Objects.equals(this.systemVolume, nodeConfigForListNodePoolsOutput.systemVolume) &&
@@ -423,7 +579,7 @@ public class NodeConfigForListNodePoolsOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalContainerStorageEnabled, autoRenew, autoRenewPeriod, dataVolumes, hpcClusterIds, imageId, initializeScript, instanceChargeType, instanceTypeIds, namePrefix, period, security, subnetIds, systemVolume, tags);
+    return Objects.hash(additionalContainerStorageEnabled, autoRenew, autoRenewPeriod, dataVolumes, deploymentSetGroupNumber, deploymentSetId, hpcClusterIds, imageId, initializeScript, instanceChargeType, instanceTypeIds, namePrefix, period, projectName, publicAccessConfig, publicAccessEnabled, security, subnetIds, systemVolume, tags);
   }
 
 
@@ -436,6 +592,8 @@ public class NodeConfigForListNodePoolsOutput {
     sb.append("    autoRenew: ").append(toIndentedString(autoRenew)).append("\n");
     sb.append("    autoRenewPeriod: ").append(toIndentedString(autoRenewPeriod)).append("\n");
     sb.append("    dataVolumes: ").append(toIndentedString(dataVolumes)).append("\n");
+    sb.append("    deploymentSetGroupNumber: ").append(toIndentedString(deploymentSetGroupNumber)).append("\n");
+    sb.append("    deploymentSetId: ").append(toIndentedString(deploymentSetId)).append("\n");
     sb.append("    hpcClusterIds: ").append(toIndentedString(hpcClusterIds)).append("\n");
     sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
     sb.append("    initializeScript: ").append(toIndentedString(initializeScript)).append("\n");
@@ -443,6 +601,9 @@ public class NodeConfigForListNodePoolsOutput {
     sb.append("    instanceTypeIds: ").append(toIndentedString(instanceTypeIds)).append("\n");
     sb.append("    namePrefix: ").append(toIndentedString(namePrefix)).append("\n");
     sb.append("    period: ").append(toIndentedString(period)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    publicAccessConfig: ").append(toIndentedString(publicAccessConfig)).append("\n");
+    sb.append("    publicAccessEnabled: ").append(toIndentedString(publicAccessEnabled)).append("\n");
     sb.append("    security: ").append(toIndentedString(security)).append("\n");
     sb.append("    subnetIds: ").append(toIndentedString(subnetIds)).append("\n");
     sb.append("    systemVolume: ").append(toIndentedString(systemVolume)).append("\n");

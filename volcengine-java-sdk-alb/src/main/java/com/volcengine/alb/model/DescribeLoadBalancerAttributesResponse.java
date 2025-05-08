@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.volcengine.alb.model.AccessLogForDescribeLoadBalancerAttributesOutput;
 import com.volcengine.alb.model.EipForDescribeLoadBalancerAttributesOutput;
+import com.volcengine.alb.model.GlobalAcceleratorsForDescribeLoadBalancerAttributesOutput;
 import com.volcengine.alb.model.HealthLogForDescribeLoadBalancerAttributesOutput;
 import com.volcengine.alb.model.ListenerForDescribeLoadBalancerAttributesOutput;
 import com.volcengine.alb.model.TLSAccessLogForDescribeLoadBalancerAttributesOutput;
@@ -81,6 +82,9 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
   @SerializedName("EniId")
   private String eniId = null;
 
+  @SerializedName("GlobalAccelerators")
+  private GlobalAcceleratorsForDescribeLoadBalancerAttributesOutput globalAccelerators = null;
+
   @SerializedName("HealthLog")
   private HealthLogForDescribeLoadBalancerAttributesOutput healthLog = null;
 
@@ -89,6 +93,9 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
 
   @SerializedName("LoadBalancerBillingType")
   private Integer loadBalancerBillingType = null;
+
+  @SerializedName("LoadBalancerEdition")
+  private String loadBalancerEdition = null;
 
   @SerializedName("LoadBalancerId")
   private String loadBalancerId = null;
@@ -101,6 +108,12 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
 
   @SerializedName("LockReason")
   private String lockReason = null;
+
+  @SerializedName("ModificationProtectionReason")
+  private String modificationProtectionReason = null;
+
+  @SerializedName("ModificationProtectionStatus")
+  private String modificationProtectionStatus = null;
 
   @SerializedName("OverdueTime")
   private String overdueTime = null;
@@ -398,6 +411,25 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
     this.eniId = eniId;
   }
 
+  public DescribeLoadBalancerAttributesResponse globalAccelerators(GlobalAcceleratorsForDescribeLoadBalancerAttributesOutput globalAccelerators) {
+    this.globalAccelerators = globalAccelerators;
+    return this;
+  }
+
+   /**
+   * Get globalAccelerators
+   * @return globalAccelerators
+  **/
+  @Valid
+  @Schema(description = "")
+  public GlobalAcceleratorsForDescribeLoadBalancerAttributesOutput getGlobalAccelerators() {
+    return globalAccelerators;
+  }
+
+  public void setGlobalAccelerators(GlobalAcceleratorsForDescribeLoadBalancerAttributesOutput globalAccelerators) {
+    this.globalAccelerators = globalAccelerators;
+  }
+
   public DescribeLoadBalancerAttributesResponse healthLog(HealthLogForDescribeLoadBalancerAttributesOutput healthLog) {
     this.healthLog = healthLog;
     return this;
@@ -460,6 +492,24 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
 
   public void setLoadBalancerBillingType(Integer loadBalancerBillingType) {
     this.loadBalancerBillingType = loadBalancerBillingType;
+  }
+
+  public DescribeLoadBalancerAttributesResponse loadBalancerEdition(String loadBalancerEdition) {
+    this.loadBalancerEdition = loadBalancerEdition;
+    return this;
+  }
+
+   /**
+   * Get loadBalancerEdition
+   * @return loadBalancerEdition
+  **/
+  @Schema(description = "")
+  public String getLoadBalancerEdition() {
+    return loadBalancerEdition;
+  }
+
+  public void setLoadBalancerEdition(String loadBalancerEdition) {
+    this.loadBalancerEdition = loadBalancerEdition;
   }
 
   public DescribeLoadBalancerAttributesResponse loadBalancerId(String loadBalancerId) {
@@ -540,6 +590,42 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
 
   public void setLockReason(String lockReason) {
     this.lockReason = lockReason;
+  }
+
+  public DescribeLoadBalancerAttributesResponse modificationProtectionReason(String modificationProtectionReason) {
+    this.modificationProtectionReason = modificationProtectionReason;
+    return this;
+  }
+
+   /**
+   * Get modificationProtectionReason
+   * @return modificationProtectionReason
+  **/
+  @Schema(description = "")
+  public String getModificationProtectionReason() {
+    return modificationProtectionReason;
+  }
+
+  public void setModificationProtectionReason(String modificationProtectionReason) {
+    this.modificationProtectionReason = modificationProtectionReason;
+  }
+
+  public DescribeLoadBalancerAttributesResponse modificationProtectionStatus(String modificationProtectionStatus) {
+    this.modificationProtectionStatus = modificationProtectionStatus;
+    return this;
+  }
+
+   /**
+   * Get modificationProtectionStatus
+   * @return modificationProtectionStatus
+  **/
+  @Schema(description = "")
+  public String getModificationProtectionStatus() {
+    return modificationProtectionStatus;
+  }
+
+  public void setModificationProtectionStatus(String modificationProtectionStatus) {
+    this.modificationProtectionStatus = modificationProtectionStatus;
   }
 
   public DescribeLoadBalancerAttributesResponse overdueTime(String overdueTime) {
@@ -837,13 +923,17 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
         Objects.equals(this.enabled, describeLoadBalancerAttributesResponse.enabled) &&
         Objects.equals(this.eniAddress, describeLoadBalancerAttributesResponse.eniAddress) &&
         Objects.equals(this.eniId, describeLoadBalancerAttributesResponse.eniId) &&
+        Objects.equals(this.globalAccelerators, describeLoadBalancerAttributesResponse.globalAccelerators) &&
         Objects.equals(this.healthLog, describeLoadBalancerAttributesResponse.healthLog) &&
         Objects.equals(this.listeners, describeLoadBalancerAttributesResponse.listeners) &&
         Objects.equals(this.loadBalancerBillingType, describeLoadBalancerAttributesResponse.loadBalancerBillingType) &&
+        Objects.equals(this.loadBalancerEdition, describeLoadBalancerAttributesResponse.loadBalancerEdition) &&
         Objects.equals(this.loadBalancerId, describeLoadBalancerAttributesResponse.loadBalancerId) &&
         Objects.equals(this.loadBalancerName, describeLoadBalancerAttributesResponse.loadBalancerName) &&
         Objects.equals(this.localAddresses, describeLoadBalancerAttributesResponse.localAddresses) &&
         Objects.equals(this.lockReason, describeLoadBalancerAttributesResponse.lockReason) &&
+        Objects.equals(this.modificationProtectionReason, describeLoadBalancerAttributesResponse.modificationProtectionReason) &&
+        Objects.equals(this.modificationProtectionStatus, describeLoadBalancerAttributesResponse.modificationProtectionStatus) &&
         Objects.equals(this.overdueTime, describeLoadBalancerAttributesResponse.overdueTime) &&
         Objects.equals(this.projectName, describeLoadBalancerAttributesResponse.projectName) &&
         Objects.equals(this.requestId, describeLoadBalancerAttributesResponse.requestId) &&
@@ -862,7 +952,7 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessLog, addressIpVersion, businessStatus, createTime, dnSName, deleteProtection, deletedTime, description, eip, eipAddress, eipId, enabled, eniAddress, eniId, healthLog, listeners, loadBalancerBillingType, loadBalancerId, loadBalancerName, localAddresses, lockReason, overdueTime, projectName, requestId, sniAutoMatch, status, subnetId, tlSAccessLog, tags, type, updateTime, vpcId, wafInstanceId, wafProtectionEnabled, zoneMappings);
+    return Objects.hash(accessLog, addressIpVersion, businessStatus, createTime, dnSName, deleteProtection, deletedTime, description, eip, eipAddress, eipId, enabled, eniAddress, eniId, globalAccelerators, healthLog, listeners, loadBalancerBillingType, loadBalancerEdition, loadBalancerId, loadBalancerName, localAddresses, lockReason, modificationProtectionReason, modificationProtectionStatus, overdueTime, projectName, requestId, sniAutoMatch, status, subnetId, tlSAccessLog, tags, type, updateTime, vpcId, wafInstanceId, wafProtectionEnabled, zoneMappings);
   }
 
 
@@ -885,13 +975,17 @@ public class DescribeLoadBalancerAttributesResponse extends com.volcengine.model
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    eniAddress: ").append(toIndentedString(eniAddress)).append("\n");
     sb.append("    eniId: ").append(toIndentedString(eniId)).append("\n");
+    sb.append("    globalAccelerators: ").append(toIndentedString(globalAccelerators)).append("\n");
     sb.append("    healthLog: ").append(toIndentedString(healthLog)).append("\n");
     sb.append("    listeners: ").append(toIndentedString(listeners)).append("\n");
     sb.append("    loadBalancerBillingType: ").append(toIndentedString(loadBalancerBillingType)).append("\n");
+    sb.append("    loadBalancerEdition: ").append(toIndentedString(loadBalancerEdition)).append("\n");
     sb.append("    loadBalancerId: ").append(toIndentedString(loadBalancerId)).append("\n");
     sb.append("    loadBalancerName: ").append(toIndentedString(loadBalancerName)).append("\n");
     sb.append("    localAddresses: ").append(toIndentedString(localAddresses)).append("\n");
     sb.append("    lockReason: ").append(toIndentedString(lockReason)).append("\n");
+    sb.append("    modificationProtectionReason: ").append(toIndentedString(modificationProtectionReason)).append("\n");
+    sb.append("    modificationProtectionStatus: ").append(toIndentedString(modificationProtectionStatus)).append("\n");
     sb.append("    overdueTime: ").append(toIndentedString(overdueTime)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    requestId: ").append(toIndentedString(requestId)).append("\n");

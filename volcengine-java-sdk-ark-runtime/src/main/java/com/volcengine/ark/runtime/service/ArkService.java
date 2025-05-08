@@ -5,24 +5,25 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.volcengine.StringUtil;
-import com.volcengine.ark.runtime.*;
+import com.volcengine.ark.runtime.Const;
 import com.volcengine.ark.runtime.exception.ArkAPIError;
 import com.volcengine.ark.runtime.exception.ArkException;
 import com.volcengine.ark.runtime.exception.ArkHttpException;
-import com.volcengine.ark.runtime.interceptor.AuthenticationInterceptor;
-import com.volcengine.ark.runtime.interceptor.ArkResourceStsAuthenticationInterceptor;
-import com.volcengine.ark.runtime.interceptor.RequestIdInterceptor;
-import com.volcengine.ark.runtime.interceptor.RetryInterceptor;
+import com.volcengine.ark.runtime.interceptor.*;
+import com.volcengine.ark.runtime.model.content.generation.DeleteContentGenerationTaskResponse;
+import com.volcengine.ark.runtime.interceptor.*;
 import com.volcengine.ark.runtime.model.bot.completion.chat.BotChatCompletionChunk;
 import com.volcengine.ark.runtime.model.bot.completion.chat.BotChatCompletionRequest;
 import com.volcengine.ark.runtime.model.bot.completion.chat.BotChatCompletionResult;
 import com.volcengine.ark.runtime.model.completion.chat.*;
+import com.volcengine.ark.runtime.model.content.generation.*;
 import com.volcengine.ark.runtime.model.context.CreateContextRequest;
 import com.volcengine.ark.runtime.model.context.CreateContextResult;
 import com.volcengine.ark.runtime.model.context.chat.ContextChatCompletionRequest;
 import com.volcengine.ark.runtime.model.embeddings.EmbeddingRequest;
 import com.volcengine.ark.runtime.model.embeddings.EmbeddingResult;
+import com.volcengine.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
+import com.volcengine.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
 import com.volcengine.ark.runtime.model.tokenization.TokenizationRequest;
 import com.volcengine.ark.runtime.model.tokenization.TokenizationResult;
 import com.volcengine.ark.runtime.utils.ResponseBodyCallback;
@@ -31,18 +32,18 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import okhttp3.*;
-import org.apache.commons.lang.StringUtils;
 import retrofit2.Call;
 import retrofit2.HttpException;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.Retrofit;
-import retrofit2.http.HeaderMap;
+
 
 import java.io.IOException;
 import java.net.Proxy;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -59,7 +60,7 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
     public ArkService(final String apiKey, final Duration timeout) {
         ObjectMapper mapper = defaultObjectMapper();
         OkHttpClient client = defaultApiKeyClient(apiKey, timeout);
-        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL);
+        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL, null);
 
         this.api = retrofit.create(ArkApi.class);
         this.executorService = client.dispatcher().executorService();
@@ -72,7 +73,7 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
     public ArkService(final String ak, final String sk, final Duration timeout) {
         ObjectMapper mapper = defaultObjectMapper();
         OkHttpClient client = defaultResourceStsClient(ak, sk, timeout, BASE_REGION);
-        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL);
+        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL, null);
 
         this.api = retrofit.create(ArkApi.class);
         this.executorService = client.dispatcher().executorService();
@@ -116,13 +117,19 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
                 .build();
     }
 
-    public static Retrofit defaultRetrofit(OkHttpClient client, ObjectMapper mapper, String baseUrl) {
-        return new Retrofit.Builder()
+    public static Retrofit defaultRetrofit(OkHttpClient client, ObjectMapper mapper, String baseUrl, Executor callbackExecutor) {
+        Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+
+        if (callbackExecutor != null) {
+            // to avoid NPE
+            builder.callbackExecutor(callbackExecutor);
+        }
+
+        return builder.build();
     }
 
     public static <T> T execute(Single<T> apiCall) {
@@ -166,6 +173,10 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.createChatCompletion(request, request.getModel(), new HashMap<>()));
     }
 
+    public ChatCompletionResult createBatchChatCompletion(ChatCompletionRequest request) {
+        return execute(api.createBatchChatCompletion(request, request.getModel(), new HashMap<>()));
+    }
+
     public ChatCompletionResult createChatCompletion(ChatCompletionRequest request, Map<String, String> customHeaders) {
         return execute(api.createChatCompletion(request, request.getModel(), customHeaders));
     }
@@ -188,6 +199,14 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
 
     public EmbeddingResult createEmbeddings(EmbeddingRequest request, Map<String, String> customHeaders) {
         return execute(api.createEmbeddings(request, request.getModel(), customHeaders));
+    }
+
+    public MultimodalEmbeddingResult createMultiModalEmbeddings(MultimodalEmbeddingRequest request) {
+        return execute(api.createMultiModalEmbeddings(request, request.getModel(), new HashMap<>()));
+    }
+
+    public MultimodalEmbeddingResult createMultiModalEmbeddings(MultimodalEmbeddingRequest request, Map<String, String> customHeaders) {
+        return execute(api.createMultiModalEmbeddings(request, request.getModel(), customHeaders));
     }
 
     @Override
@@ -248,6 +267,62 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.createTokenization(request, request.getModel(), customHeaders));
     }
 
+    public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request) {
+        return execute(api.createContentGenerationTask(request, request.getModel(), new HashMap<>()));
+    }
+
+    public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request, Map<String, String> customHeaders) {
+        return execute(api.createContentGenerationTask(request, request.getModel(), customHeaders));
+    }
+
+
+    public GetContentGenerationTaskResponse getContentGenerationTask(GetContentGenerationTaskRequest request) {
+        return execute(api.getContentGenerationTask(request.getTaskId(), new HashMap<>()));
+    }
+
+    public GetContentGenerationTaskResponse getContentGenerationTask(GetContentGenerationTaskRequest request, Map<String, String> customHeaders) {
+        return execute(api.getContentGenerationTask(request.getTaskId(), customHeaders));
+    }
+
+    @Override
+    public ListContentGenerationTasksResponse listContentGenerationTasks(ListContentGenerationTasksRequest request) {
+        return execute(
+                api.listContentGenerationTasks(
+                        request.getPageNum(),
+                        request.getPageSize(),
+                        request.getStatus(),
+                        request.getModel(),
+                        request.getTaskIds(),
+                        new HashMap<>()
+                )
+        );
+    }
+
+    public ListContentGenerationTasksResponse listContentGenerationTasks(
+            ListContentGenerationTasksRequest request,
+            Map<String, String> customHeaders
+    ) {
+        return execute(
+                api.listContentGenerationTasks(
+                        request.getPageNum(),
+                        request.getPageSize(),
+                        request.getStatus(),
+                        request.getModel(),
+                        request.getTaskIds(),
+                        customHeaders
+                )
+        );
+    }
+
+
+    public DeleteContentGenerationTaskResponse deleteContentGenerationTask(DeleteContentGenerationTaskRequest request) {
+        return execute(api.deleteContentGenerationTask(request.getTaskId(), new HashMap<>()));
+    }
+
+    public DeleteContentGenerationTaskResponse deleteContentGenerationTask(DeleteContentGenerationTaskRequest request, Map<String, String> customHeaders) {
+        return execute(api.deleteContentGenerationTask(request.getTaskId(), customHeaders));
+    }
+
     public void shutdownExecutor() {
         Objects.requireNonNull(this.executorService, "executorService must be set in order to shut down");
         this.executorService.shutdown();
@@ -264,11 +339,13 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         private String region = BASE_REGION;
         private String baseUrl = BASE_URL;
         private Duration timeout = DEFAULT_TIMEOUT;
+        private Duration callTimeout;
         private Duration connectTimeout = DEFAULT_CONNECT_TIMEOUT;
         private int retryTimes = DEFAULT_RETRY_TIMES;
         private Proxy proxy;
         private ConnectionPool connectionPool;
         private Dispatcher dispatcher;
+        private Executor callbackExecutor;
 
         public ArkService.Builder ak(String ak) {
             this.ak = ak;
@@ -303,6 +380,11 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
             return this;
         }
 
+        public ArkService.Builder callTimeout(Duration callTimeout) {
+            this.callTimeout = callTimeout;
+            return this;
+        }
+
         public ArkService.Builder connectTimeout(Duration connectTimeout) {
             this.connectTimeout = connectTimeout;
             return this;
@@ -325,6 +407,11 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
 
         public ArkService.Builder dispatcher(Dispatcher dispatcher) {
             this.dispatcher = dispatcher;
+            return this;
+        }
+
+        public ArkService.Builder callbackExecutor(Executor callbackExecutor) {
+            this.callbackExecutor = callbackExecutor;
             return this;
         }
 
@@ -356,10 +443,12 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
             OkHttpClient client = clientBuilder
                     .addInterceptor(new RequestIdInterceptor())
                     .addInterceptor(new RetryInterceptor(retryTimes))
+                    .addInterceptor(new BatchInterceptor())
                     .readTimeout(timeout.toMillis(), TimeUnit.MILLISECONDS)
+                    .callTimeout(callTimeout == null ? timeout.toMillis() : callTimeout.toMillis(), TimeUnit.MILLISECONDS)
                     .connectTimeout(connectTimeout)
                     .build();
-            Retrofit retrofit = defaultRetrofit(client, mapper, baseUrl);
+            Retrofit retrofit = defaultRetrofit(client, mapper, baseUrl, callbackExecutor);
 
             return new ArkService(
                     retrofit.create(ArkApi.class),

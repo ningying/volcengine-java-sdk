@@ -42,6 +42,12 @@ public class Ipv6GatewayForDescribeIpv6GatewaysOutput {
   @SerializedName("Name")
   private String name = null;
 
+  @SerializedName("ProjectName")
+  private String projectName = null;
+
+  @SerializedName("RouteTableId")
+  private String routeTableId = null;
+
   @SerializedName("Status")
   private String status = null;
 
@@ -123,6 +129,42 @@ public class Ipv6GatewayForDescribeIpv6GatewaysOutput {
     this.name = name;
   }
 
+  public Ipv6GatewayForDescribeIpv6GatewaysOutput projectName(String projectName) {
+    this.projectName = projectName;
+    return this;
+  }
+
+   /**
+   * Get projectName
+   * @return projectName
+  **/
+  @Schema(description = "")
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
+  public Ipv6GatewayForDescribeIpv6GatewaysOutput routeTableId(String routeTableId) {
+    this.routeTableId = routeTableId;
+    return this;
+  }
+
+   /**
+   * Get routeTableId
+   * @return routeTableId
+  **/
+  @Schema(description = "")
+  public String getRouteTableId() {
+    return routeTableId;
+  }
+
+  public void setRouteTableId(String routeTableId) {
+    this.routeTableId = routeTableId;
+  }
+
   public Ipv6GatewayForDescribeIpv6GatewaysOutput status(String status) {
     this.status = status;
     return this;
@@ -191,6 +233,8 @@ public class Ipv6GatewayForDescribeIpv6GatewaysOutput {
         Objects.equals(this.description, ipv6GatewayForDescribeIpv6GatewaysOutput.description) &&
         Objects.equals(this.ipv6GatewayId, ipv6GatewayForDescribeIpv6GatewaysOutput.ipv6GatewayId) &&
         Objects.equals(this.name, ipv6GatewayForDescribeIpv6GatewaysOutput.name) &&
+        Objects.equals(this.projectName, ipv6GatewayForDescribeIpv6GatewaysOutput.projectName) &&
+        Objects.equals(this.routeTableId, ipv6GatewayForDescribeIpv6GatewaysOutput.routeTableId) &&
         Objects.equals(this.status, ipv6GatewayForDescribeIpv6GatewaysOutput.status) &&
         Objects.equals(this.updateTime, ipv6GatewayForDescribeIpv6GatewaysOutput.updateTime) &&
         Objects.equals(this.vpcId, ipv6GatewayForDescribeIpv6GatewaysOutput.vpcId);
@@ -198,7 +242,7 @@ public class Ipv6GatewayForDescribeIpv6GatewaysOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(creationTime, description, ipv6GatewayId, name, status, updateTime, vpcId);
+    return Objects.hash(creationTime, description, ipv6GatewayId, name, projectName, routeTableId, status, updateTime, vpcId);
   }
 
 
@@ -211,6 +255,8 @@ public class Ipv6GatewayForDescribeIpv6GatewaysOutput {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    ipv6GatewayId: ").append(toIndentedString(ipv6GatewayId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    routeTableId: ").append(toIndentedString(routeTableId)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
     sb.append("    vpcId: ").append(toIndentedString(vpcId)).append("\n");

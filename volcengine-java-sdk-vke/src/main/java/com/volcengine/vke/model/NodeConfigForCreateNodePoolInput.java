@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.volcengine.vke.model.DataVolumeForCreateNodePoolInput;
+import com.volcengine.vke.model.PublicAccessConfigForCreateNodePoolInput;
 import com.volcengine.vke.model.SecurityForCreateNodePoolInput;
 import com.volcengine.vke.model.SystemVolumeForCreateNodePoolInput;
 import com.volcengine.vke.model.TagForCreateNodePoolInput;
@@ -32,6 +33,7 @@ import javax.validation.Valid;
 /**
  * NodeConfigForCreateNodePoolInput
  */
+
 
 
 public class NodeConfigForCreateNodePoolInput {
@@ -47,6 +49,12 @@ public class NodeConfigForCreateNodePoolInput {
   @SerializedName("DataVolumes")
   private List<DataVolumeForCreateNodePoolInput> dataVolumes = null;
 
+  @SerializedName("DeploymentSetGroupNumber")
+  private Integer deploymentSetGroupNumber = null;
+
+  @SerializedName("DeploymentSetId")
+  private String deploymentSetId = null;
+
   @SerializedName("HpcClusterIds")
   private List<String> hpcClusterIds = null;
 
@@ -61,7 +69,9 @@ public class NodeConfigForCreateNodePoolInput {
    */
   @JsonAdapter(InstanceChargeTypeEnum.Adapter.class)
   public enum InstanceChargeTypeEnum {
+    @SerializedName("PostPaid")
     POSTPAID("PostPaid"),
+    @SerializedName("PrePaid")
     PREPAID("PrePaid");
 
     private String value;
@@ -108,6 +118,15 @@ public class NodeConfigForCreateNodePoolInput {
 
   @SerializedName("Period")
   private Integer period = null;
+
+  @SerializedName("ProjectName")
+  private String projectName = null;
+
+  @SerializedName("PublicAccessConfig")
+  private PublicAccessConfigForCreateNodePoolInput publicAccessConfig = null;
+
+  @SerializedName("PublicAccessEnabled")
+  private Boolean publicAccessEnabled = null;
 
   @SerializedName("Security")
   private SecurityForCreateNodePoolInput security = null;
@@ -200,6 +219,42 @@ public class NodeConfigForCreateNodePoolInput {
 
   public void setDataVolumes(List<DataVolumeForCreateNodePoolInput> dataVolumes) {
     this.dataVolumes = dataVolumes;
+  }
+
+  public NodeConfigForCreateNodePoolInput deploymentSetGroupNumber(Integer deploymentSetGroupNumber) {
+    this.deploymentSetGroupNumber = deploymentSetGroupNumber;
+    return this;
+  }
+
+   /**
+   * Get deploymentSetGroupNumber
+   * @return deploymentSetGroupNumber
+  **/
+  @Schema(description = "")
+  public Integer getDeploymentSetGroupNumber() {
+    return deploymentSetGroupNumber;
+  }
+
+  public void setDeploymentSetGroupNumber(Integer deploymentSetGroupNumber) {
+    this.deploymentSetGroupNumber = deploymentSetGroupNumber;
+  }
+
+  public NodeConfigForCreateNodePoolInput deploymentSetId(String deploymentSetId) {
+    this.deploymentSetId = deploymentSetId;
+    return this;
+  }
+
+   /**
+   * Get deploymentSetId
+   * @return deploymentSetId
+  **/
+  @Schema(description = "")
+  public String getDeploymentSetId() {
+    return deploymentSetId;
+  }
+
+  public void setDeploymentSetId(String deploymentSetId) {
+    this.deploymentSetId = deploymentSetId;
   }
 
   public NodeConfigForCreateNodePoolInput hpcClusterIds(List<String> hpcClusterIds) {
@@ -344,6 +399,61 @@ public class NodeConfigForCreateNodePoolInput {
     this.period = period;
   }
 
+  public NodeConfigForCreateNodePoolInput projectName(String projectName) {
+    this.projectName = projectName;
+    return this;
+  }
+
+   /**
+   * Get projectName
+   * @return projectName
+  **/
+  @Schema(description = "")
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
+  public NodeConfigForCreateNodePoolInput publicAccessConfig(PublicAccessConfigForCreateNodePoolInput publicAccessConfig) {
+    this.publicAccessConfig = publicAccessConfig;
+    return this;
+  }
+
+   /**
+   * Get publicAccessConfig
+   * @return publicAccessConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public PublicAccessConfigForCreateNodePoolInput getPublicAccessConfig() {
+    return publicAccessConfig;
+  }
+
+  public void setPublicAccessConfig(PublicAccessConfigForCreateNodePoolInput publicAccessConfig) {
+    this.publicAccessConfig = publicAccessConfig;
+  }
+
+  public NodeConfigForCreateNodePoolInput publicAccessEnabled(Boolean publicAccessEnabled) {
+    this.publicAccessEnabled = publicAccessEnabled;
+    return this;
+  }
+
+   /**
+   * Get publicAccessEnabled
+   * @return publicAccessEnabled
+  **/
+  @Schema(description = "")
+  public Boolean isPublicAccessEnabled() {
+    return publicAccessEnabled;
+  }
+
+  public void setPublicAccessEnabled(Boolean publicAccessEnabled) {
+    this.publicAccessEnabled = publicAccessEnabled;
+  }
+
   public NodeConfigForCreateNodePoolInput security(SecurityForCreateNodePoolInput security) {
     this.security = security;
     return this;
@@ -449,6 +559,8 @@ public class NodeConfigForCreateNodePoolInput {
         Objects.equals(this.autoRenew, nodeConfigForCreateNodePoolInput.autoRenew) &&
         Objects.equals(this.autoRenewPeriod, nodeConfigForCreateNodePoolInput.autoRenewPeriod) &&
         Objects.equals(this.dataVolumes, nodeConfigForCreateNodePoolInput.dataVolumes) &&
+        Objects.equals(this.deploymentSetGroupNumber, nodeConfigForCreateNodePoolInput.deploymentSetGroupNumber) &&
+        Objects.equals(this.deploymentSetId, nodeConfigForCreateNodePoolInput.deploymentSetId) &&
         Objects.equals(this.hpcClusterIds, nodeConfigForCreateNodePoolInput.hpcClusterIds) &&
         Objects.equals(this.imageId, nodeConfigForCreateNodePoolInput.imageId) &&
         Objects.equals(this.initializeScript, nodeConfigForCreateNodePoolInput.initializeScript) &&
@@ -456,6 +568,9 @@ public class NodeConfigForCreateNodePoolInput {
         Objects.equals(this.instanceTypeIds, nodeConfigForCreateNodePoolInput.instanceTypeIds) &&
         Objects.equals(this.namePrefix, nodeConfigForCreateNodePoolInput.namePrefix) &&
         Objects.equals(this.period, nodeConfigForCreateNodePoolInput.period) &&
+        Objects.equals(this.projectName, nodeConfigForCreateNodePoolInput.projectName) &&
+        Objects.equals(this.publicAccessConfig, nodeConfigForCreateNodePoolInput.publicAccessConfig) &&
+        Objects.equals(this.publicAccessEnabled, nodeConfigForCreateNodePoolInput.publicAccessEnabled) &&
         Objects.equals(this.security, nodeConfigForCreateNodePoolInput.security) &&
         Objects.equals(this.subnetIds, nodeConfigForCreateNodePoolInput.subnetIds) &&
         Objects.equals(this.systemVolume, nodeConfigForCreateNodePoolInput.systemVolume) &&
@@ -464,7 +579,7 @@ public class NodeConfigForCreateNodePoolInput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalContainerStorageEnabled, autoRenew, autoRenewPeriod, dataVolumes, hpcClusterIds, imageId, initializeScript, instanceChargeType, instanceTypeIds, namePrefix, period, security, subnetIds, systemVolume, tags);
+    return Objects.hash(additionalContainerStorageEnabled, autoRenew, autoRenewPeriod, dataVolumes, deploymentSetGroupNumber, deploymentSetId, hpcClusterIds, imageId, initializeScript, instanceChargeType, instanceTypeIds, namePrefix, period, projectName, publicAccessConfig, publicAccessEnabled, security, subnetIds, systemVolume, tags);
   }
 
 
@@ -477,6 +592,8 @@ public class NodeConfigForCreateNodePoolInput {
     sb.append("    autoRenew: ").append(toIndentedString(autoRenew)).append("\n");
     sb.append("    autoRenewPeriod: ").append(toIndentedString(autoRenewPeriod)).append("\n");
     sb.append("    dataVolumes: ").append(toIndentedString(dataVolumes)).append("\n");
+    sb.append("    deploymentSetGroupNumber: ").append(toIndentedString(deploymentSetGroupNumber)).append("\n");
+    sb.append("    deploymentSetId: ").append(toIndentedString(deploymentSetId)).append("\n");
     sb.append("    hpcClusterIds: ").append(toIndentedString(hpcClusterIds)).append("\n");
     sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
     sb.append("    initializeScript: ").append(toIndentedString(initializeScript)).append("\n");
@@ -484,6 +601,9 @@ public class NodeConfigForCreateNodePoolInput {
     sb.append("    instanceTypeIds: ").append(toIndentedString(instanceTypeIds)).append("\n");
     sb.append("    namePrefix: ").append(toIndentedString(namePrefix)).append("\n");
     sb.append("    period: ").append(toIndentedString(period)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    publicAccessConfig: ").append(toIndentedString(publicAccessConfig)).append("\n");
+    sb.append("    publicAccessEnabled: ").append(toIndentedString(publicAccessEnabled)).append("\n");
     sb.append("    security: ").append(toIndentedString(security)).append("\n");
     sb.append("    subnetIds: ").append(toIndentedString(subnetIds)).append("\n");
     sb.append("    systemVolume: ").append(toIndentedString(systemVolume)).append("\n");

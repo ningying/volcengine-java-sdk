@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.volcengine.vke.model.KubeletConfigForCreateNodePoolInput;
 import com.volcengine.vke.model.LabelForCreateNodePoolInput;
 import com.volcengine.vke.model.TaintForCreateNodePoolInput;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,9 +33,16 @@ import javax.validation.Valid;
  */
 
 
+
 public class KubernetesConfigForCreateNodePoolInput {
+  @SerializedName("AutoSyncDisabled")
+  private Boolean autoSyncDisabled = null;
+
   @SerializedName("Cordon")
   private Boolean cordon = null;
+
+  @SerializedName("KubeletConfig")
+  private KubeletConfigForCreateNodePoolInput kubeletConfig = null;
 
   @SerializedName("Labels")
   private List<LabelForCreateNodePoolInput> labels = null;
@@ -44,6 +52,24 @@ public class KubernetesConfigForCreateNodePoolInput {
 
   @SerializedName("Taints")
   private List<TaintForCreateNodePoolInput> taints = null;
+
+  public KubernetesConfigForCreateNodePoolInput autoSyncDisabled(Boolean autoSyncDisabled) {
+    this.autoSyncDisabled = autoSyncDisabled;
+    return this;
+  }
+
+   /**
+   * Get autoSyncDisabled
+   * @return autoSyncDisabled
+  **/
+  @Schema(description = "")
+  public Boolean isAutoSyncDisabled() {
+    return autoSyncDisabled;
+  }
+
+  public void setAutoSyncDisabled(Boolean autoSyncDisabled) {
+    this.autoSyncDisabled = autoSyncDisabled;
+  }
 
   public KubernetesConfigForCreateNodePoolInput cordon(Boolean cordon) {
     this.cordon = cordon;
@@ -61,6 +87,25 @@ public class KubernetesConfigForCreateNodePoolInput {
 
   public void setCordon(Boolean cordon) {
     this.cordon = cordon;
+  }
+
+  public KubernetesConfigForCreateNodePoolInput kubeletConfig(KubeletConfigForCreateNodePoolInput kubeletConfig) {
+    this.kubeletConfig = kubeletConfig;
+    return this;
+  }
+
+   /**
+   * Get kubeletConfig
+   * @return kubeletConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public KubeletConfigForCreateNodePoolInput getKubeletConfig() {
+    return kubeletConfig;
+  }
+
+  public void setKubeletConfig(KubeletConfigForCreateNodePoolInput kubeletConfig) {
+    this.kubeletConfig = kubeletConfig;
   }
 
   public KubernetesConfigForCreateNodePoolInput labels(List<LabelForCreateNodePoolInput> labels) {
@@ -145,7 +190,9 @@ public class KubernetesConfigForCreateNodePoolInput {
       return false;
     }
     KubernetesConfigForCreateNodePoolInput kubernetesConfigForCreateNodePoolInput = (KubernetesConfigForCreateNodePoolInput) o;
-    return Objects.equals(this.cordon, kubernetesConfigForCreateNodePoolInput.cordon) &&
+    return Objects.equals(this.autoSyncDisabled, kubernetesConfigForCreateNodePoolInput.autoSyncDisabled) &&
+        Objects.equals(this.cordon, kubernetesConfigForCreateNodePoolInput.cordon) &&
+        Objects.equals(this.kubeletConfig, kubernetesConfigForCreateNodePoolInput.kubeletConfig) &&
         Objects.equals(this.labels, kubernetesConfigForCreateNodePoolInput.labels) &&
         Objects.equals(this.namePrefix, kubernetesConfigForCreateNodePoolInput.namePrefix) &&
         Objects.equals(this.taints, kubernetesConfigForCreateNodePoolInput.taints);
@@ -153,7 +200,7 @@ public class KubernetesConfigForCreateNodePoolInput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(cordon, labels, namePrefix, taints);
+    return Objects.hash(autoSyncDisabled, cordon, kubeletConfig, labels, namePrefix, taints);
   }
 
 
@@ -162,7 +209,9 @@ public class KubernetesConfigForCreateNodePoolInput {
     StringBuilder sb = new StringBuilder();
     sb.append("class KubernetesConfigForCreateNodePoolInput {\n");
     
+    sb.append("    autoSyncDisabled: ").append(toIndentedString(autoSyncDisabled)).append("\n");
     sb.append("    cordon: ").append(toIndentedString(cordon)).append("\n");
+    sb.append("    kubeletConfig: ").append(toIndentedString(kubeletConfig)).append("\n");
     sb.append("    labels: ").append(toIndentedString(labels)).append("\n");
     sb.append("    namePrefix: ").append(toIndentedString(namePrefix)).append("\n");
     sb.append("    taints: ").append(toIndentedString(taints)).append("\n");

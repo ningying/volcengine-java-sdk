@@ -42,6 +42,9 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
   @SerializedName("ImageId")
   private String imageId = null;
 
+  @SerializedName("InstantAccess")
+  private Boolean instantAccess = null;
+
   @SerializedName("Progress")
   private Integer progress = null;
 
@@ -50,6 +53,9 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
 
   @SerializedName("RetentionDays")
   private Integer retentionDays = null;
+
+  @SerializedName("Shared")
+  private Boolean shared = null;
 
   @SerializedName("SnapshotGroupId")
   private String snapshotGroupId = null;
@@ -144,6 +150,24 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
     this.imageId = imageId;
   }
 
+  public SnapshotForDescribeSnapshotGroupsOutput instantAccess(Boolean instantAccess) {
+    this.instantAccess = instantAccess;
+    return this;
+  }
+
+   /**
+   * Get instantAccess
+   * @return instantAccess
+  **/
+  @Schema(description = "")
+  public Boolean isInstantAccess() {
+    return instantAccess;
+  }
+
+  public void setInstantAccess(Boolean instantAccess) {
+    this.instantAccess = instantAccess;
+  }
+
   public SnapshotForDescribeSnapshotGroupsOutput progress(Integer progress) {
     this.progress = progress;
     return this;
@@ -196,6 +220,24 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
 
   public void setRetentionDays(Integer retentionDays) {
     this.retentionDays = retentionDays;
+  }
+
+  public SnapshotForDescribeSnapshotGroupsOutput shared(Boolean shared) {
+    this.shared = shared;
+    return this;
+  }
+
+   /**
+   * Get shared
+   * @return shared
+  **/
+  @Schema(description = "")
+  public Boolean isShared() {
+    return shared;
+  }
+
+  public void setShared(Boolean shared) {
+    this.shared = shared;
   }
 
   public SnapshotForDescribeSnapshotGroupsOutput snapshotGroupId(String snapshotGroupId) {
@@ -454,9 +496,11 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
     return Objects.equals(this.creationTime, snapshotForDescribeSnapshotGroupsOutput.creationTime) &&
         Objects.equals(this.description, snapshotForDescribeSnapshotGroupsOutput.description) &&
         Objects.equals(this.imageId, snapshotForDescribeSnapshotGroupsOutput.imageId) &&
+        Objects.equals(this.instantAccess, snapshotForDescribeSnapshotGroupsOutput.instantAccess) &&
         Objects.equals(this.progress, snapshotForDescribeSnapshotGroupsOutput.progress) &&
         Objects.equals(this.projectName, snapshotForDescribeSnapshotGroupsOutput.projectName) &&
         Objects.equals(this.retentionDays, snapshotForDescribeSnapshotGroupsOutput.retentionDays) &&
+        Objects.equals(this.shared, snapshotForDescribeSnapshotGroupsOutput.shared) &&
         Objects.equals(this.snapshotGroupId, snapshotForDescribeSnapshotGroupsOutput.snapshotGroupId) &&
         Objects.equals(this.snapshotId, snapshotForDescribeSnapshotGroupsOutput.snapshotId) &&
         Objects.equals(this.snapshotName, snapshotForDescribeSnapshotGroupsOutput.snapshotName) &&
@@ -474,7 +518,7 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(creationTime, description, imageId, progress, projectName, retentionDays, snapshotGroupId, snapshotId, snapshotName, snapshotType, status, tags, volumeId, volumeKind, volumeName, volumeSize, volumeStatus, volumeType, zoneId);
+    return Objects.hash(creationTime, description, imageId, instantAccess, progress, projectName, retentionDays, shared, snapshotGroupId, snapshotId, snapshotName, snapshotType, status, tags, volumeId, volumeKind, volumeName, volumeSize, volumeStatus, volumeType, zoneId);
   }
 
 
@@ -486,9 +530,11 @@ public class SnapshotForDescribeSnapshotGroupsOutput {
     sb.append("    creationTime: ").append(toIndentedString(creationTime)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
+    sb.append("    instantAccess: ").append(toIndentedString(instantAccess)).append("\n");
     sb.append("    progress: ").append(toIndentedString(progress)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    retentionDays: ").append(toIndentedString(retentionDays)).append("\n");
+    sb.append("    shared: ").append(toIndentedString(shared)).append("\n");
     sb.append("    snapshotGroupId: ").append(toIndentedString(snapshotGroupId)).append("\n");
     sb.append("    snapshotId: ").append(toIndentedString(snapshotId)).append("\n");
     sb.append("    snapshotName: ").append(toIndentedString(snapshotName)).append("\n");

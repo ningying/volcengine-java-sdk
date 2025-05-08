@@ -3,6 +3,7 @@ package com.volcengine.ark.runtime.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volcengine.ark.runtime.Const;
 import com.volcengine.ark.runtime.exception.ArkAPIError;
+import com.volcengine.ark.runtime.exception.ArkException;
 import com.volcengine.ark.runtime.exception.ArkHttpException;
 import com.volcengine.ark.runtime.SSEFormatException;
 import com.volcengine.ark.runtime.service.ArkService;
@@ -51,11 +52,17 @@ public class ResponseBodyCallback implements Callback<ResponseBody> {
                 if (errorBody == null) {
                     throw e;
                 } else {
-                    ArkAPIError error = mapper.readValue(
-                            errorBody.string(),
-                            ArkAPIError.class
-                    );
-                    throw new ArkHttpException(error, e, e.code(), requestId);
+                    try {
+                        ArkAPIError error = mapper.readValue(
+                                errorBody.string(),
+                                ArkAPIError.class
+                        );
+                        throw new ArkHttpException(error, e, e.code(), requestId);
+                    } catch (ArkHttpException httpException) {
+                        throw httpException;
+                    } catch (Exception ignore) {
+                        throw new ArkHttpException(new ArkAPIError(new ArkAPIError.ArkErrorDetails(e.getMessage(), "", "", "InternalServiceError")), e, e.code(), requestId);
+                    }
                 }
             }
 
@@ -75,7 +82,8 @@ public class ResponseBodyCallback implements Callback<ResponseBody> {
                         }
                     } catch (ArkHttpException e) {
                         throw e;
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
 
                     sse = new SSE(data);
                 } else if (line.equals("") && sse != null) {
@@ -102,7 +110,7 @@ public class ResponseBodyCallback implements Callback<ResponseBody> {
                 try {
                     reader.close();
                 } catch (IOException e) {
-					          // do nothing
+                    // do nothing
                 }
             }
         }

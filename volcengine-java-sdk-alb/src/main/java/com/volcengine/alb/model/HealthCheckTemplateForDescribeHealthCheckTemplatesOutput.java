@@ -19,8 +19,11 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.volcengine.alb.model.TagForDescribeHealthCheckTemplatesOutput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -30,6 +33,9 @@ import javax.validation.Valid;
 
 
 public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
+  @SerializedName("CreateTime")
+  private String createTime = null;
+
   @SerializedName("Description")
   private String description = null;
 
@@ -66,8 +72,38 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
   @SerializedName("HealthyThreshold")
   private Integer healthyThreshold = null;
 
+  @SerializedName("Port")
+  private Integer port = null;
+
+  @SerializedName("ProjectName")
+  private String projectName = null;
+
+  @SerializedName("Tags")
+  private List<TagForDescribeHealthCheckTemplatesOutput> tags = null;
+
   @SerializedName("UnhealthyThreshold")
   private Integer unhealthyThreshold = null;
+
+  @SerializedName("UpdateTime")
+  private String updateTime = null;
+
+  public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput createTime(String createTime) {
+    this.createTime = createTime;
+    return this;
+  }
+
+   /**
+   * Get createTime
+   * @return createTime
+  **/
+  @Schema(description = "")
+  public String getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(String createTime) {
+    this.createTime = createTime;
+  }
 
   public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput description(String description) {
     this.description = description;
@@ -285,6 +321,71 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
     this.healthyThreshold = healthyThreshold;
   }
 
+  public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput port(Integer port) {
+    this.port = port;
+    return this;
+  }
+
+   /**
+   * Get port
+   * minimum: 0
+   * maximum: 65535
+   * @return port
+  **/
+ @Min(0) @Max(65535)  @Schema(description = "")
+  public Integer getPort() {
+    return port;
+  }
+
+  public void setPort(Integer port) {
+    this.port = port;
+  }
+
+  public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput projectName(String projectName) {
+    this.projectName = projectName;
+    return this;
+  }
+
+   /**
+   * Get projectName
+   * @return projectName
+  **/
+  @Schema(description = "")
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
+  public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput tags(List<TagForDescribeHealthCheckTemplatesOutput> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput addTagsItem(TagForDescribeHealthCheckTemplatesOutput tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<TagForDescribeHealthCheckTemplatesOutput>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<TagForDescribeHealthCheckTemplatesOutput> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<TagForDescribeHealthCheckTemplatesOutput> tags) {
+    this.tags = tags;
+  }
+
   public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput unhealthyThreshold(Integer unhealthyThreshold) {
     this.unhealthyThreshold = unhealthyThreshold;
     return this;
@@ -303,6 +404,24 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
     this.unhealthyThreshold = unhealthyThreshold;
   }
 
+  public HealthCheckTemplateForDescribeHealthCheckTemplatesOutput updateTime(String updateTime) {
+    this.updateTime = updateTime;
+    return this;
+  }
+
+   /**
+   * Get updateTime
+   * @return updateTime
+  **/
+  @Schema(description = "")
+  public String getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(String updateTime) {
+    this.updateTime = updateTime;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -313,7 +432,8 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
       return false;
     }
     HealthCheckTemplateForDescribeHealthCheckTemplatesOutput healthCheckTemplateForDescribeHealthCheckTemplatesOutput = (HealthCheckTemplateForDescribeHealthCheckTemplatesOutput) o;
-    return Objects.equals(this.description, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.description) &&
+    return Objects.equals(this.createTime, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.createTime) &&
+        Objects.equals(this.description, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.description) &&
         Objects.equals(this.healthCheckDomain, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.healthCheckDomain) &&
         Objects.equals(this.healthCheckHttpCode, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.healthCheckHttpCode) &&
         Objects.equals(this.healthCheckHttpVersion, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.healthCheckHttpVersion) &&
@@ -325,12 +445,16 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
         Objects.equals(this.healthCheckTimeout, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.healthCheckTimeout) &&
         Objects.equals(this.healthCheckURI, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.healthCheckURI) &&
         Objects.equals(this.healthyThreshold, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.healthyThreshold) &&
-        Objects.equals(this.unhealthyThreshold, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.unhealthyThreshold);
+        Objects.equals(this.port, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.port) &&
+        Objects.equals(this.projectName, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.projectName) &&
+        Objects.equals(this.tags, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.tags) &&
+        Objects.equals(this.unhealthyThreshold, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.unhealthyThreshold) &&
+        Objects.equals(this.updateTime, healthCheckTemplateForDescribeHealthCheckTemplatesOutput.updateTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, healthCheckDomain, healthCheckHttpCode, healthCheckHttpVersion, healthCheckInterval, healthCheckMethod, healthCheckProtocol, healthCheckTemplateId, healthCheckTemplateName, healthCheckTimeout, healthCheckURI, healthyThreshold, unhealthyThreshold);
+    return Objects.hash(createTime, description, healthCheckDomain, healthCheckHttpCode, healthCheckHttpVersion, healthCheckInterval, healthCheckMethod, healthCheckProtocol, healthCheckTemplateId, healthCheckTemplateName, healthCheckTimeout, healthCheckURI, healthyThreshold, port, projectName, tags, unhealthyThreshold, updateTime);
   }
 
 
@@ -339,6 +463,7 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
     StringBuilder sb = new StringBuilder();
     sb.append("class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {\n");
     
+    sb.append("    createTime: ").append(toIndentedString(createTime)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    healthCheckDomain: ").append(toIndentedString(healthCheckDomain)).append("\n");
     sb.append("    healthCheckHttpCode: ").append(toIndentedString(healthCheckHttpCode)).append("\n");
@@ -351,7 +476,11 @@ public class HealthCheckTemplateForDescribeHealthCheckTemplatesOutput {
     sb.append("    healthCheckTimeout: ").append(toIndentedString(healthCheckTimeout)).append("\n");
     sb.append("    healthCheckURI: ").append(toIndentedString(healthCheckURI)).append("\n");
     sb.append("    healthyThreshold: ").append(toIndentedString(healthyThreshold)).append("\n");
+    sb.append("    port: ").append(toIndentedString(port)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    unhealthyThreshold: ").append(toIndentedString(unhealthyThreshold)).append("\n");
+    sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
     sb.append("}");
     return sb.toString();
   }

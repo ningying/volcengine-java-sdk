@@ -20,7 +20,9 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.volcengine.volcobserve.model.ConditionForCreateRuleInput;
+import com.volcengine.volcobserve.model.ConvertTagForCreateRuleInput;
 import com.volcengine.volcobserve.model.DimensionConditionsForCreateRuleInput;
+import com.volcengine.volcobserve.model.LevelConditionForCreateRuleInput;
 import com.volcengine.volcobserve.model.NoDataForCreateRuleInput;
 import com.volcengine.volcobserve.model.RecoveryNotifyForCreateRuleInput;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -118,6 +120,9 @@ public class CreateRuleRequest {
   @SerializedName("Level")
   private String level = null;
 
+  @SerializedName("LevelConditions")
+  private List<LevelConditionForCreateRuleInput> levelConditions = null;
+
   @SerializedName("MultipleConditions")
   private Boolean multipleConditions = null;
 
@@ -127,8 +132,14 @@ public class CreateRuleRequest {
   @SerializedName("NoData")
   private NoDataForCreateRuleInput noData = null;
 
+  @SerializedName("NotificationId")
+  private String notificationId = null;
+
   @SerializedName("OriginalDimensions")
   private Map<String, List<String>> originalDimensions = null;
+
+  @SerializedName("ProjectName")
+  private String projectName = null;
 
   @SerializedName("RecoveryNotify")
   private RecoveryNotifyForCreateRuleInput recoveryNotify = null;
@@ -190,6 +201,9 @@ public class CreateRuleRequest {
 
   @SerializedName("SubNamespace")
   private String subNamespace = null;
+
+  @SerializedName("Tags")
+  private List<ConvertTagForCreateRuleInput> tags = null;
 
   @SerializedName("Webhook")
   private String webhook = null;
@@ -426,6 +440,33 @@ public class CreateRuleRequest {
     this.level = level;
   }
 
+  public CreateRuleRequest levelConditions(List<LevelConditionForCreateRuleInput> levelConditions) {
+    this.levelConditions = levelConditions;
+    return this;
+  }
+
+  public CreateRuleRequest addLevelConditionsItem(LevelConditionForCreateRuleInput levelConditionsItem) {
+    if (this.levelConditions == null) {
+      this.levelConditions = new ArrayList<LevelConditionForCreateRuleInput>();
+    }
+    this.levelConditions.add(levelConditionsItem);
+    return this;
+  }
+
+   /**
+   * Get levelConditions
+   * @return levelConditions
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<LevelConditionForCreateRuleInput> getLevelConditions() {
+    return levelConditions;
+  }
+
+  public void setLevelConditions(List<LevelConditionForCreateRuleInput> levelConditions) {
+    this.levelConditions = levelConditions;
+  }
+
   public CreateRuleRequest multipleConditions(Boolean multipleConditions) {
     this.multipleConditions = multipleConditions;
     return this;
@@ -482,6 +523,24 @@ public class CreateRuleRequest {
     this.noData = noData;
   }
 
+  public CreateRuleRequest notificationId(String notificationId) {
+    this.notificationId = notificationId;
+    return this;
+  }
+
+   /**
+   * Get notificationId
+   * @return notificationId
+  **/
+  @Schema(description = "")
+  public String getNotificationId() {
+    return notificationId;
+  }
+
+  public void setNotificationId(String notificationId) {
+    this.notificationId = notificationId;
+  }
+
   public CreateRuleRequest originalDimensions(Map<String, List<String>> originalDimensions) {
     this.originalDimensions = originalDimensions;
     return this;
@@ -507,6 +566,24 @@ public class CreateRuleRequest {
 
   public void setOriginalDimensions(Map<String, List<String>> originalDimensions) {
     this.originalDimensions = originalDimensions;
+  }
+
+  public CreateRuleRequest projectName(String projectName) {
+    this.projectName = projectName;
+    return this;
+  }
+
+   /**
+   * Get projectName
+   * @return projectName
+  **/
+  @Schema(description = "")
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
   }
 
   public CreateRuleRequest recoveryNotify(RecoveryNotifyForCreateRuleInput recoveryNotify) {
@@ -630,6 +707,33 @@ public class CreateRuleRequest {
     this.subNamespace = subNamespace;
   }
 
+  public CreateRuleRequest tags(List<ConvertTagForCreateRuleInput> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public CreateRuleRequest addTagsItem(ConvertTagForCreateRuleInput tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<ConvertTagForCreateRuleInput>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<ConvertTagForCreateRuleInput> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<ConvertTagForCreateRuleInput> tags) {
+    this.tags = tags;
+  }
+
   public CreateRuleRequest webhook(String webhook) {
     this.webhook = webhook;
     return this;
@@ -695,23 +799,27 @@ public class CreateRuleRequest {
         Objects.equals(this.enableState, createRuleRequest.enableState) &&
         Objects.equals(this.evaluationCount, createRuleRequest.evaluationCount) &&
         Objects.equals(this.level, createRuleRequest.level) &&
+        Objects.equals(this.levelConditions, createRuleRequest.levelConditions) &&
         Objects.equals(this.multipleConditions, createRuleRequest.multipleConditions) &&
         Objects.equals(this.namespace, createRuleRequest.namespace) &&
         Objects.equals(this.noData, createRuleRequest.noData) &&
+        Objects.equals(this.notificationId, createRuleRequest.notificationId) &&
         Objects.equals(this.originalDimensions, createRuleRequest.originalDimensions) &&
+        Objects.equals(this.projectName, createRuleRequest.projectName) &&
         Objects.equals(this.recoveryNotify, createRuleRequest.recoveryNotify) &&
         Objects.equals(this.regions, createRuleRequest.regions) &&
         Objects.equals(this.ruleName, createRuleRequest.ruleName) &&
         Objects.equals(this.ruleType, createRuleRequest.ruleType) &&
         Objects.equals(this.silenceTime, createRuleRequest.silenceTime) &&
         Objects.equals(this.subNamespace, createRuleRequest.subNamespace) &&
+        Objects.equals(this.tags, createRuleRequest.tags) &&
         Objects.equals(this.webhook, createRuleRequest.webhook) &&
         Objects.equals(this.webhookIds, createRuleRequest.webhookIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(alertMethods, conditionOperator, conditions, contactGroupIds, description, dimensionConditions, effectEndAt, effectStartAt, enableState, evaluationCount, level, multipleConditions, namespace, noData, originalDimensions, recoveryNotify, regions, ruleName, ruleType, silenceTime, subNamespace, webhook, webhookIds);
+    return Objects.hash(alertMethods, conditionOperator, conditions, contactGroupIds, description, dimensionConditions, effectEndAt, effectStartAt, enableState, evaluationCount, level, levelConditions, multipleConditions, namespace, noData, notificationId, originalDimensions, projectName, recoveryNotify, regions, ruleName, ruleType, silenceTime, subNamespace, tags, webhook, webhookIds);
   }
 
 
@@ -731,16 +839,20 @@ public class CreateRuleRequest {
     sb.append("    enableState: ").append(toIndentedString(enableState)).append("\n");
     sb.append("    evaluationCount: ").append(toIndentedString(evaluationCount)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
+    sb.append("    levelConditions: ").append(toIndentedString(levelConditions)).append("\n");
     sb.append("    multipleConditions: ").append(toIndentedString(multipleConditions)).append("\n");
     sb.append("    namespace: ").append(toIndentedString(namespace)).append("\n");
     sb.append("    noData: ").append(toIndentedString(noData)).append("\n");
+    sb.append("    notificationId: ").append(toIndentedString(notificationId)).append("\n");
     sb.append("    originalDimensions: ").append(toIndentedString(originalDimensions)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    recoveryNotify: ").append(toIndentedString(recoveryNotify)).append("\n");
     sb.append("    regions: ").append(toIndentedString(regions)).append("\n");
     sb.append("    ruleName: ").append(toIndentedString(ruleName)).append("\n");
     sb.append("    ruleType: ").append(toIndentedString(ruleType)).append("\n");
     sb.append("    silenceTime: ").append(toIndentedString(silenceTime)).append("\n");
     sb.append("    subNamespace: ").append(toIndentedString(subNamespace)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    webhook: ").append(toIndentedString(webhook)).append("\n");
     sb.append("    webhookIds: ").append(toIndentedString(webhookIds)).append("\n");
     sb.append("}");
