@@ -9,7 +9,7 @@ import com.volcengine.speech.exception.SpeechAPIError;
 import com.volcengine.speech.exception.SpeechHttpException;
 import com.volcengine.speech.interceptor.AuthenticationInterceptor;
 import com.volcengine.speech.listener.AsrWebsocketListener;
-import com.volcengine.speech.listener.SpeechWebSocketListener;
+import com.volcengine.speech.listener.TtsWebSocketListener;
 import com.volcengine.speech.model.AsrStreamRequest;
 import com.volcengine.speech.model.AsrStreamResponse;
 import com.volcengine.speech.model.TtsStreamRequest;
@@ -173,10 +173,10 @@ public abstract class SpeechBaseService {
                 .url("wss://openspeech.bytedance.com/api/v3/tts/bidirection")
                 .header("X-Api-App-Key", request.getAppId())
                 .header("X-Api-Access-Key", request.getToken())
-                .header("X-Api-Resource-Id", "volc.megatts.default")
+                .header("X-Api-Resource-Id", request.getSpeaker().startsWith("S_") ? "volc.megatts.default" : "volc.service_type.10029")
                 .header("X-Api-Connect-Id", UUID.randomUUID().toString())
                 .build();
-        return Flowable.create(emitter -> client.newWebSocket(httpRequest, new SpeechWebSocketListener(request.getSpeaker(), request.getInputStream(), emitter)), BackpressureStrategy.BUFFER);
+        return Flowable.create(emitter -> client.newWebSocket(httpRequest, new TtsWebSocketListener(request, emitter)), BackpressureStrategy.BUFFER);
     }
 
     private static Flowable<Map<String, Object>> stream(AsrStreamRequest request) {

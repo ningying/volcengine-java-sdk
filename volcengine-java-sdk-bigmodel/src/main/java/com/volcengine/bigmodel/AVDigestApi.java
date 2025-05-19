@@ -143,9 +143,9 @@ public class AVDigestApi {
      * @return ApiResponse&lt;QuerySongResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<QuerySongResponse> querySongWithHttpInfo( @NotNull QuerySongRequest body) throws ApiException {
+    public ApiResponse<QuerySongResponse> querySongWithHttpInfo(@NotNull QuerySongRequest body) throws ApiException {
         com.squareup.okhttp.Call call = querySongValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<GenSongForTimeResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<QuerySongResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 

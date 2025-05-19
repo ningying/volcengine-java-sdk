@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * SongDetail
@@ -265,5 +266,35 @@ public class SongDetail {
 
   public void setPrompt(String prompt) {
     this.prompt = prompt;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    SongDetail that = (SongDetail) o;
+    return Objects.equals(audioUrl, that.audioUrl) && Objects.equals(captions, that.captions) && Objects.equals(lyrics, that.lyrics) && Objects.equals(duration, that.duration) && Objects.equals(genre, that.genre) && Objects.equals(mood, that.mood) && Objects.equals(gender, that.gender) && Objects.equals(tosPath, that.tosPath) && Objects.equals(callbackURL, that.callbackURL) && Objects.equals(timbre, that.timbre) && Objects.equals(prompt, that.prompt);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(audioUrl, captions, lyrics, duration, genre, mood, gender, tosPath, callbackURL, timbre, prompt);
+  }
+
+  @Override
+  public String toString() {
+    return "SongDetail{" +
+            "audioUrl='" + audioUrl + '\'' +
+            ", captions='" + captions + '\'' +
+            ", lyrics='" + lyrics + '\'' +
+            ", duration=" + duration +
+            ", genre='" + genre + '\'' +
+            ", mood='" + mood + '\'' +
+            ", gender='" + gender + '\'' +
+            ", tosPath='" + tosPath + '\'' +
+            ", callbackURL='" + callbackURL + '\'' +
+            ", timbre='" + timbre + '\'' +
+            ", prompt='" + prompt + '\'' +
+            '}';
   }
 }

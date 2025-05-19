@@ -24,7 +24,7 @@ public class TestQuerySong {
         AVDigestApi api = new AVDigestApi(apiClient);
 
         QuerySongRequest querySongRequest = new QuerySongRequest();
-        querySongRequest.setTaskID("111");
+        querySongRequest.setTaskID("202505354919787870027777");
 
         try {
             QuerySongResponse response = api.querySong(querySongRequest);

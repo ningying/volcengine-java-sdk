@@ -18,6 +18,16 @@ public class TtsStreamRequest {
 
     private String speaker;
 
+    private Integer sampleRate;
+
+    private Integer bitRate;
+
+    private Integer speechRate;
+
+    private Integer loudnessRate;
+
+    private String format;
+
     private Flowable<String> inputStream;
 
     private FlowableEmitter<byte[]> emitter;
@@ -54,6 +64,46 @@ public class TtsStreamRequest {
         this.speaker = speaker;
     }
 
+    public Integer getSpeechRate() {
+        return speechRate;
+    }
+
+    public void setSpeechRate(Integer speechRate) {
+        this.speechRate = speechRate;
+    }
+
+    public Integer getSampleRate() {
+        return sampleRate;
+    }
+
+    public void setSampleRate(Integer sampleRate) {
+        this.sampleRate = sampleRate;
+    }
+
+    public Integer getBitRate() {
+        return bitRate;
+    }
+
+    public void setBitRate(Integer bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    public Integer getLoudnessRate() {
+        return loudnessRate;
+    }
+
+    public void setLoudnessRate(Integer loudnessRate) {
+        this.loudnessRate = loudnessRate;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
     public FlowableEmitter<byte[]> getEmitter() {
         return emitter;
     }
@@ -70,6 +120,17 @@ public class TtsStreamRequest {
         private String appId;
         private String token;
         private String speaker;
+
+        private Integer sampleRate;
+
+        private Integer bitRate;
+
+        private Integer speechRate;
+
+        private Integer loudnessRate;
+
+        private String format;
+
         private Flowable<String> inputStream;
 
         private FlowableEmitter<byte[]>  emitter;
@@ -81,6 +142,31 @@ public class TtsStreamRequest {
 
         public Builder setSpeaker(String speaker) {
             this.speaker = speaker;
+            return this;
+        }
+
+        public Builder setSampleRate(Integer sampleRate) {
+            this.sampleRate = sampleRate;
+            return this;
+        }
+
+        public Builder setBitRate(Integer bitRate) {
+            this.bitRate = bitRate;
+            return this;
+        }
+
+        public Builder setSpeechRate(Integer speechRate) {
+            this.speechRate = speechRate;
+            return this;
+        }
+
+        public Builder setLoudnessRate(Integer loudnessRate) {
+            this.loudnessRate = loudnessRate;
+            return this;
+        }
+
+        public Builder setFormat(String format) {
+            this.format = format;
             return this;
         }
 
@@ -104,7 +190,12 @@ public class TtsStreamRequest {
             request.setAppId(appId);
             request.setToken(token);
             request.setSpeaker(speaker);
+            request.setSampleRate(sampleRate);
+            request.setBitRate(bitRate);
+            request.setSpeechRate(speechRate);
+            request.setLoudnessRate(loudnessRate);
             request.setInputStream(inputStream);
+            request.setFormat(format);
             request.setEmitter(emitter);
             return request;
         }

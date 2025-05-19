@@ -15,6 +15,8 @@ package com.volcengine.bigmodel.model;
 import com.google.gson.annotations.SerializedName;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Objects;
+
 /**
  * GenSongV4Response
  */
@@ -33,7 +35,7 @@ public class QuerySongResponse extends com.volcengine.model.AbstractResponse {
   @SerializedName("FailureReason")
   private FailureReason failureReason = null;
 
-  @SerializedName("FailureReason")
+  @SerializedName("SongDetail")
   private SongDetail songDetail = null;
 
   public QuerySongResponse taskID(String taskID) {
@@ -130,4 +132,27 @@ public class QuerySongResponse extends com.volcengine.model.AbstractResponse {
     return this.status == 200;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    QuerySongResponse that = (QuerySongResponse) o;
+    return Objects.equals(taskID, that.taskID) && Objects.equals(status, that.status) && Objects.equals(progress, that.progress) && Objects.equals(failureReason, that.failureReason) && Objects.equals(songDetail, that.songDetail);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(taskID, status, progress, failureReason, songDetail);
+  }
+
+  @Override
+  public String toString() {
+    return "QuerySongResponse{" +
+            "taskID='" + taskID + '\'' +
+            ", status=" + status +
+            ", progress=" + progress +
+            ", failureReason=" + failureReason +
+            ", songDetail=" + songDetail +
+            '}';
+  }
 }
