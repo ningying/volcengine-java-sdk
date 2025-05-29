@@ -97,6 +97,20 @@ public class GenSongForTimeRequest {
   }
 
   /**
+   * Get duration
+   * @return duration
+   **/
+  @NotNull
+  @Schema(required = true, description = "")
+  public Integer getDuration() {
+    return duration;
+  }
+
+  public void setDuration(Integer duration) {
+    this.duration = duration;
+  }
+
+  /**
    * Get genre
    * @return genre
    **/
